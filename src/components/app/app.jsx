@@ -8,20 +8,20 @@ import data from "../../utils/data";
 export default function App() {
   const [state, setState] = useState({
     ingredients: [],
-    hasError: false
+    hasError: true
   });
 
   useEffect(() => {
     console.log(data)
-    setState(prevState => ({ ...prevState, ingredients: data, hasError: true }));
+    setState(prevState => ({ ...prevState, ingredients: data, hasError: false }));
   }, []);
 
   return (
     <>
       <AppHeader />
       <main>
-      {state.hasError &&<BurgerIngredients ingredients={state.ingredients} />}
-      <BurgerConstructor items={data} />
+      {!state.hasError &&<BurgerIngredients ingredients={state.ingredients} />}
+      <BurgerConstructor data={data} />
       </main>
     </>
   );

@@ -1,19 +1,8 @@
 import style from "./burger-ingredients.module.css";
-import { Tab, Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Ingredient from '../ingredient/ingredient';
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import IngredientsTypes from "../../utils/IngredientsTypes";
-
-const Ingredient = ({ data, count }) => (
-    <div className={style.burgerData + ' mr-6 mb-8'}>
-        {count > 0 && <Counter size="small"/>}
-        <img src={data.image}/>
-        <span className={`${style.span} m-1 text text_type_digits-default`}>
-            <span className="pr-3">{data.price}</span>
-            <CurrencyIcon type="primary" />
-        </span>
-        <span style={{textAlign: 'center'}}>{data.name}</span>
-    </div>
-);
 
 const BurgerIngredients = ({ingredients}) =>
 {
@@ -41,13 +30,7 @@ const BurgerIngredients = ({ingredients}) =>
 };
 
 BurgerIngredients.prototype = {
-  ingredients: PropTypes.arrayOf(IngredientsTypes).isRequired
+  ingredients: PropTypes.arrayOf(IngredientsTypes.isRequired).isRequired
 };
-
-Ingredient.prototype = {
-  img: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired
-}
 
 export default BurgerIngredients;

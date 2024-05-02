@@ -1,0 +1,9 @@
+.dragItem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.dragItemElement {
+  width: 100%;
+}
