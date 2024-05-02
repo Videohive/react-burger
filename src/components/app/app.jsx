@@ -20,8 +20,12 @@ export default function App() {
     <>
       <AppHeader />
       <main>
-      {!state.hasError &&<BurgerIngredients ingredients={state.ingredients} />}
-      <BurgerConstructor data={data} />
+        {!!state.ingredients.length && (
+          <>
+            <BurgerIngredients ingredients={state.ingredients} />
+            <BurgerConstructor data={state.ingredients} />
+          </>
+        )}
       </main>
     </>
   );

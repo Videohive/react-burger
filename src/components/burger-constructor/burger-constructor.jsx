@@ -13,13 +13,12 @@ const BurgerConstructor = ({ data }) => {
       };
   }, [data]);
 
-  const orderSum = (items, cost) => {
-      return items.reduce((a, b) => {
-          return a + b[cost];
-      }, 0)
-  };
-
-  const ttlPrice = orderSum([...ingredients, bun, bun], 'price'); // Предполагается, что булка добавляется дважды: как верх и как низ
+  const orderSum = useMemo(() => {
+    return ingredients.reduce(
+      (acc, ingredient) => (acc += ingredient.price),
+      bun?.price * 2 || 0
+    );
+  }, [ingredients, bun]);
 
   return (
       <div className={style.sideMenu + ' mt-25'}>
@@ -46,7 +45,7 @@ const BurgerConstructor = ({ data }) => {
           </div>
           <section className={`${style.orderProceed} mt-7 mb-7`}>
               <span className={`${style.price} m-1 text text_type_digits-default mr-10`}>
-                  <span className="pr-3">{ttlPrice}</span>
+                  <span className="pr-3">{orderSum}</span>
                   <CurrencyIcon type="primary" />
               </span>
               <Button htmlType="button" type="primary" size="medium">
@@ -58,7 +57,7 @@ const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.prototype = {
-    data: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired
+  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired
 }
 
 export default BurgerConstructor;

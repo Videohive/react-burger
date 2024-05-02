@@ -2,6 +2,7 @@
 import style from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
+import ingredientsPropTypes from '../../utils/IngredientsTypes';
 
 const Ingredient = ({ data, count }) => (
   <div className={`${style.burgerData} mr-6 mb-8`}>
@@ -15,12 +16,8 @@ const Ingredient = ({ data, count }) => (
   </div>
 );
 
-Ingredient.propTypes = {
-  data: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
+Ingredient.prototype = {
+  data: ingredientsPropTypes.isRequired,
   count: PropTypes.number.isRequired
 }
 
