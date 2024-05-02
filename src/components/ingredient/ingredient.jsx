@@ -11,7 +11,7 @@ const Ingredient = ({ data, count }) => (
           <span className="pr-3">{data.price}</span>
           <CurrencyIcon type="primary" />
       </span>
-      <span style={{textAlign: 'center'}}>{data.name}</span>
+      <span className={style.textAlignCenter}>{data.name}</span>
   </div>
 );
 
