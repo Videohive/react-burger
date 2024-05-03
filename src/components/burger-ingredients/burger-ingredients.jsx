@@ -29,7 +29,7 @@ const BurgerIngredients = ({ingredients}) =>
     )
 };
 
-BurgerIngredients.prototype = {
+BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(IngredientsTypes.isRequired).isRequired
 };
 

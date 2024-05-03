@@ -23,7 +23,6 @@
 .orderProceed {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
 }
 
 .wrapData::-webkit-scrollbar {
@@ -38,4 +37,10 @@
   border-radius: 0px;
   background-clip: content-box;
   background-color: #8585ad;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

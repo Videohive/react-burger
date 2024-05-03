@@ -17,7 +17,7 @@ const ConstructorItem = ({item}) => (
   </div>
 );
 
-ConstructorItem.prototype = {
+ConstructorItem.propTypes = {
   item: ingredientsPropTypes.isRequired
 }
 

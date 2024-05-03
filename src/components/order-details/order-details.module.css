@@ -1,0 +1,17 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info {
+  margin-top: 32px;
+}
+
+.ok {
+  height: 120px;
+}
+
+.wait {
+  margin-top: 10px;
+}

@@ -1,0 +1,22 @@
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 720px;
+  max-height: max-content;
+  background-color: #1c1c1c;
+  border-radius: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+.title {
+  width: 100%;
+}
