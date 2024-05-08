@@ -1,0 +1,48 @@
+.appHeader {
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1c21;
+}
+
+.navBar {
+  width: 1280px;
+  display: flex;
+  position: relative;
+}
+
+.profileArea {
+  position: absolute;
+  right: 0;
+}
+
+.logoCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.constructorElement {
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.constructorElement div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  all: unset;             /* Сбрасывает все наследуемые и не наследуемые свойства */
+  color: inherit;         /* Цвет текста наследуется от родительского элемента */
+  cursor: pointer;        /* Устанавливает курсор в виде указателя, подразумевая кликабельность */
+  text-decoration: none;  /* Убирает подчеркивание */
+  font: inherit;          /* Шрифт наследуется от родительского элемента */
+}
+

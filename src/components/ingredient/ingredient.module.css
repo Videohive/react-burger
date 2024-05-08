@@ -1,0 +1,19 @@
+.burgerData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 45%;
+  position: relative;
+  cursor: pointer;
+}
+
+.span {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: auto;
+}
+
+.textAlignCenter {
+  text-align: center;
+}
