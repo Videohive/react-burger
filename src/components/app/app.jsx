@@ -1,55 +1,40 @@
-import './app.module.css';
-import { useState, useEffect } from "react";
+import "./app.module.css";
+import { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-import { getIngredients } from '../../utils/api';
+import { getIngredients } from "../../services/actions/ingredients";
+import { useDispatch, useSelector } from "react-redux";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function App() {
-  const [state, setState] = useState({
-    ingredients: [],
-    isLoading: true,
-    hasError: false,
-    errorMessage: ''
-  });
+  const dispatch = useDispatch();
+  const { isLoaded, hasError, ingredients } = useSelector(
+    (store) => store.data
+  );
 
   useEffect(() => {
-    getIngredients()
-      .then(data => {
-        setState({
-          ingredients: data.data,
-          isLoading: false,
-          hasError: false,
-          errorMessage: ''
-        });
-      })
-      .catch(error => {
-        console.error("Ошибка при получении данных:", error);
-        setState({
-          ingredients: [],
-          isLoading: false,
-          hasError: true,
-          errorMessage: error.message || 'Произошла ошибка при получении данных'
-        });
-      });
+    dispatch(getIngredients());
   }, []);
 
   return (
     <>
       <AppHeader />
-      <main>
-        {state.isLoading ? (
-          <p>Loading...</p>
-        ) : state.hasError ? (
-          <p>Error: {state.errorMessage}</p>
-        ) : (
-          <>
-            <BurgerIngredients ingredients={state.ingredients} />
-            <BurgerConstructor data={state.ingredients} />
-          </>
-        )}
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <main>
+          {!isLoaded ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {!hasError && ingredients && <BurgerIngredients />}
+              {!hasError && ingredients && <BurgerConstructor />}
+            </>
+          )}
+        </main>
+      </DndProvider>
     </>
   );
 }
