@@ -57,11 +57,11 @@ const BurgerIngredients = () => {
       <div className={`${style.contentWrap} mt-10 mb-10`} id='scrollPoint' ref={scrollContainerRef} onScroll={handleScrollToTab}>
         <div className={style.ingredientWrap}>
           <h2 className="text text_type_main-medium mb-6" id='bun' ref={bunsSectionRef}>Булки</h2>
-          {buns.map((data, index) => <Ingredient key={index} data={data}/>)}
+          {buns.map((data) => <Ingredient key={data._id} data={data}/>)}
           <h2 className="text text_type_main-medium mb-6" id='sauce' ref={saucesSectionRef}>Соусы</h2>
-          {sauces.map((data, index) => <Ingredient key={index} data={data}/>)}
+          {sauces.map((data) => <Ingredient key={data._id} data={data}/>)}
           <h2 className="text text_type_main-medium mb-6" id='main' ref={mainsSectionRef}>Начинки</h2>
-          {mains.map((data, index) => <Ingredient key={index} data={data}/>)}
+          {mains.map((data) => <Ingredient key={data._id} data={data}/>)}
         </div>
       </div>
     </section>

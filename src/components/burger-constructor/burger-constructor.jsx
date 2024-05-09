@@ -11,9 +11,9 @@ import { useModal } from "../../hooks/use-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
-  CONSTRUCTOR_ADD_BUN,
-  CONSTRUCTOR_ADD_INGREDIENT,
-} from "../../services/actions";
+  addIngredient,
+  addBun
+} from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 
 const BurgerConstructor = () => {
@@ -22,7 +22,6 @@ const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients);
   const { bun, main } = ingredients;
   const allIngredients = useSelector((store) => store.data.ingredients);
-  const order = useSelector((store) => store.order);
 
   const orderSum = useMemo(() => {
     return (
@@ -52,21 +51,20 @@ const BurgerConstructor = () => {
   const [, drop] = useDrop({
     accept: "ingredient",
     drop(item) {
-      const itemId = allIngredients.findIndex((e) => e._id === item._id);
-      if (itemId !== -1) {
-        if (allIngredients[itemId].type === "bun") {
-          dispatch({ type: CONSTRUCTOR_ADD_BUN, item: allIngredients[itemId] });
+        const itemId = allIngredients.findIndex((e) => e._id === item._id);
+        if (itemId !== -1) {
+            const ingredient = allIngredients[itemId];
+            if (ingredient.type === "bun") {
+                dispatch(addBun(ingredient)); // Используем функцию-криэйтор для добавления булочки
+            } else {
+                dispatch(addIngredient(ingredient)); // Используем функцию-криэйтор для добавления ингредиента
+            }
         } else {
-          dispatch({
-            type: CONSTRUCTOR_ADD_INGREDIENT,
-            item: allIngredients[itemId],
-          });
+            console.error("Элемент не найден");
         }
-      } else {
-        console.error("Элемент не найден");
-      }
     },
-  });
+});
+
 
   return (
     <div ref={drop} className={style.sideMenu + " mt-25"}>
@@ -109,9 +107,9 @@ const BurgerConstructor = () => {
         >
           Оформить заказ
         </Button>
-        {isModalOpen && order.isLoaded && (
+        {isModalOpen && (
           <Modal onClose={closeModal}>
-            <OrderDetails orderId={order.id} />
+            <OrderDetails />
           </Modal>
         )}
       </section>

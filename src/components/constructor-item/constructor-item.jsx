@@ -5,13 +5,9 @@ import ingredientsPropTypes from '../../utils/IngredientsTypes';
 import { useDispatch } from 'react-redux';
 import { CONSTRUCTOR_REMOVE_INGREDIENT, CONSTRUCTOR_SORT_INGREDIENT } from '../../services/actions';
 import { useDrop, useDrag } from 'react-dnd';
-import Modal from '../modal/modal';
-import { useModal } from '../../hooks/use-modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }) => {
   const dispatch = useDispatch();
-  const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleClose = (e) => {
     if (!item.isLocked) {
@@ -48,7 +44,7 @@ const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }
           <DragIcon type="primary" />
         </div>
       )}
-      <div className={style.dragItemElement} onClick={openModal}>
+      <div className={style.dragItemElement}>
         <ConstructorElement
           type={isTop ? 'top' : (isBottom ? 'bottom' : null)}
           isLocked={item.isLocked}
@@ -58,11 +54,6 @@ const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }
           handleClose={handleClose}
         />
       </div>
-      {isModalOpen && (
-        <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails data={item} />
-        </Modal>
-      )}
     </div>
   );
 };

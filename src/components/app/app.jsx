@@ -26,7 +26,7 @@ export default function App() {
       <DndProvider backend={HTML5Backend}>
         <main>
           {!isLoaded ? (
-            <p>Loading...</p>
+            <p>Загружаем...</p>
           ) : (
             <>
               {!hasError && ingredients && <BurgerIngredients />}

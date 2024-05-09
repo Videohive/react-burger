@@ -2,11 +2,27 @@ import {
   INGREDIENTS_REQUEST,
   INGREDIENTS_SUCCESS,
   INGREDIENTS_FAILED,
+  CONSTRUCTOR_ADD_INGREDIENT
 } from "./index";
 import {
-  API_URL
+  BASE_URL
 } from '../../utils/const'
 import request from "../../utils/request";
+import { v4 as uuidv4 } from 'uuid';
+
+export const addIngredient = (item) => {
+    return {
+        type: CONSTRUCTOR_ADD_INGREDIENT,
+        item: {...item, uuid: uuidv4()}
+    };
+};
+
+export const addBun = (item) => {
+  return {
+      type: 'CONSTRUCTOR_ADD_BUN',
+      item: {...item, uuid: uuidv4()}
+  };
+};
 
 export const getIngredients = () => {
   return function (dispatch) {
@@ -14,7 +30,7 @@ export const getIngredients = () => {
       type: INGREDIENTS_REQUEST
     })
 
-    request(API_URL).then(data => {
+    request(BASE_URL + '/ingredients').then(data => {
       if (data.success) {
         //console.log(data.data)
         dispatch({

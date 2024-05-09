@@ -1,13 +1,15 @@
 import request from "../../utils/request";
 import {
-  ORDER_URL
+  BASE_URL
 } from "../../utils/const";
 
 import {
   ORDER_ERROR,
   ORDER_SUCCESS,
   ORDER_REQUEST
-} from "./"
+} from "./";
+
+import { CONSTRUCTOR_CLEAN } from "../actions";
 
 export const makeOrder = (order) => (dispatch) => {
   const body = {
@@ -26,11 +28,14 @@ export const makeOrder = (order) => (dispatch) => {
     type: ORDER_REQUEST
   })
 
-  request(ORDER_URL, options).then(data => {
+  request(BASE_URL + '/orders', options).then(data => {
     if (data.success) {
       dispatch({
         type: ORDER_SUCCESS,
         id: data.order.number,
+      })
+      dispatch({
+        type: CONSTRUCTOR_CLEAN,
       })
     } else {
       dispatch({
