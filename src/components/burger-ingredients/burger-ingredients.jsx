@@ -3,12 +3,18 @@ import React, {useRef, useState} from 'react'
 import Ingredient from '../ingredient/ingredient';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from 'react-redux';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
+import { useModal } from '../../hooks/use-modal';
 
 const BurgerIngredients = () => {
   const ingredients = useSelector(store => store.data.ingredients);
   const buns = ingredients.filter((item) => item.type === "bun");
   const mains = ingredients.filter((item) => item.type === "main");
   const sauces = ingredients.filter((item) => item.type === "sauce");
+
+  const [currentIngredient, setCurrentIngredient] = useState(null);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const [activeTab, setActiveTab] = useState('bun');
 
@@ -46,7 +52,13 @@ const BurgerIngredients = () => {
     }
   };
 
+  const handleOpenModal = (ingredient) => {
+    setCurrentIngredient(ingredient);
+    openModal();
+  };
+
   return (
+    <>
     <section className={`${style.main} mr-10`}>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
       <div className={style.navigation}>
@@ -57,14 +69,20 @@ const BurgerIngredients = () => {
       <div className={`${style.contentWrap} mt-10 mb-10`} id='scrollPoint' ref={scrollContainerRef} onScroll={handleScrollToTab}>
         <div className={style.ingredientWrap}>
           <h2 className="text text_type_main-medium mb-6" id='bun' ref={bunsSectionRef}>Булки</h2>
-          {buns.map((data) => <Ingredient key={data._id} data={data}/>)}
+          {buns.map((data) => <Ingredient key={data._id} data={data} onOpenModal={handleOpenModal}/>)}
           <h2 className="text text_type_main-medium mb-6" id='sauce' ref={saucesSectionRef}>Соусы</h2>
-          {sauces.map((data) => <Ingredient key={data._id} data={data}/>)}
+          {sauces.map((data) => <Ingredient key={data._id} data={data} onOpenModal={handleOpenModal}/>)}
           <h2 className="text text_type_main-medium mb-6" id='main' ref={mainsSectionRef}>Начинки</h2>
-          {mains.map((data) => <Ingredient key={data._id} data={data}/>)}
+          {mains.map((data) => <Ingredient key={data._id} data={data} onOpenModal={handleOpenModal}/>)}
         </div>
       </div>
     </section>
+    {isModalOpen && currentIngredient && (
+      <Modal title="Детали ингредиента" onClose={closeModal}>
+        <IngredientDetails data={currentIngredient} />
+      </Modal>
+      )}
+    </>
   )
 };
 
