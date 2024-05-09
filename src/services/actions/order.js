@@ -1,7 +1,4 @@
 import request from "../../utils/request";
-import {
-  BASE_URL
-} from "../../utils/const";
 
 import {
   ORDER_ERROR,
@@ -13,9 +10,7 @@ import { CONSTRUCTOR_CLEAN } from "../actions";
 
 export const makeOrder = (order) => (dispatch) => {
   const body = {
-    ingredients: order.map((item) => {
-      return item._id
-    })
+    ingredients: order.map(item => item._id)
   };
   const options = {
     method: "POST",
@@ -24,27 +19,18 @@ export const makeOrder = (order) => (dispatch) => {
       "Content-type": "application/json; charset=UTF-8"
     }
   };
-  dispatch({
-    type: ORDER_REQUEST
-  })
 
-  request(BASE_URL + '/orders', options).then(data => {
-    if (data.success) {
-      dispatch({
-        type: ORDER_SUCCESS,
-        id: data.order.number,
-      })
-      dispatch({
-        type: CONSTRUCTOR_CLEAN,
-      })
-    } else {
-      dispatch({
-        type: ORDER_ERROR
-      })
-    }
-  }).catch(e => {
-    dispatch({
-      type: ORDER_ERROR
+  dispatch({ type: ORDER_REQUEST });
+
+  request('/orders', options)
+    .then(data => {
+      dispatch({ type: ORDER_SUCCESS, id: data.order.number });
+      dispatch({ type: CONSTRUCTOR_CLEAN });
     })
-  })
-}
+    .catch(error => {
+      dispatch({
+        type: ORDER_ERROR,
+        error: error.message
+      });
+    });
+};

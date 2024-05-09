@@ -4,9 +4,7 @@ import {
   INGREDIENTS_FAILED,
   CONSTRUCTOR_ADD_INGREDIENT
 } from "./index";
-import {
-  BASE_URL
-} from '../../utils/const'
+
 import request from "../../utils/request";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,26 +24,20 @@ export const addBun = (item) => {
 
 export const getIngredients = () => {
   return function (dispatch) {
-    dispatch({
-      type: INGREDIENTS_REQUEST
-    })
+    dispatch({ type: INGREDIENTS_REQUEST });
 
-    request(BASE_URL + '/ingredients').then(data => {
-      if (data.success) {
-        //console.log(data.data)
+    request('/ingredients')
+      .then(data => {
         dispatch({
           type: INGREDIENTS_SUCCESS,
           data: data.data
-        })
-      } else {
-        dispatch({
-          type: INGREDIENTS_FAILED
-        })
-      }
-    }).catch(e => {
-      dispatch({
-        type: INGREDIENTS_FAILED
+        });
       })
-    })
-  }
-}
+      .catch(error => {
+        dispatch({
+          type: INGREDIENTS_FAILED,
+          error: error.message
+        });
+      });
+  };
+};
