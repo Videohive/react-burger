@@ -2,7 +2,8 @@ import {
   INGREDIENTS_REQUEST,
   INGREDIENTS_SUCCESS,
   INGREDIENTS_FAILED,
-  CONSTRUCTOR_ADD_INGREDIENT
+  CONSTRUCTOR_ADD_INGREDIENT,
+  CONSTRUCTOR_ADD_BUN
 } from "./index";
 
 import request from "../../utils/request";
@@ -17,7 +18,7 @@ export const addIngredient = (item) => {
 
 export const addBun = (item) => {
   return {
-      type: 'CONSTRUCTOR_ADD_BUN',
+      type: CONSTRUCTOR_ADD_BUN,
       item: {...item, uuid: uuidv4()}
   };
 };
