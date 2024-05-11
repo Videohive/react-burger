@@ -6,4 +6,9 @@
 
 .dragItemElement {
   width: 100%;
+  cursor: pointer;
+}
+
+.cursorMove {
+  cursor: move;
 }
