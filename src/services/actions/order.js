@@ -16,13 +16,14 @@ export const makeOrder = (order) => (dispatch) => {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
-      "Content-type": "application/json; charset=UTF-8"
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization: localStorage.getItem("accessToken"),
     }
   };
 
   dispatch({ type: ORDER_REQUEST });
 
-  request('/orders', options)
+  request('orders', options)
     .then(data => {
       dispatch({ type: ORDER_SUCCESS, id: data.order.number });
       dispatch({ type: CONSTRUCTOR_CLEAN });
