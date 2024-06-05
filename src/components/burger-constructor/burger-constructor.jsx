@@ -1,5 +1,5 @@
 import style from "./burger-constructor.module.css";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import ConstructorItem from "../constructor-item/constructor-item";
 import {
   CurrencyIcon,
@@ -8,6 +8,7 @@ import {
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { useModal } from "../../hooks/use-modal";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
@@ -15,9 +16,12 @@ import {
   addBun
 } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
+import { getUser } from "../../services/actions/profile";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated =  useSelector((store) => store.auth.isAuthenticated);
   const { isModalOpen, openModal, closeModal } = useModal();
   const ingredients = useSelector((store) => store.ingredients);
   const { bun, main } = ingredients;
@@ -34,18 +38,13 @@ const BurgerConstructor = () => {
   }, [ingredients]);
 
   function createOrder() {
-    if (!ingredients.bun) {
-      console.warn("Нет булки");
-      return;
+    console.log(isAuthenticated)
+    if (isAuthenticated) {
+      dispatch(makeOrder([...main, bun]));
+      openModal();
+    } else {
+      navigate("/login");
     }
-
-    if (ingredients.main.length < 1) {
-      console.warn("Нет ингредиентов");
-      return;
-    }
-
-    dispatch(makeOrder([...main, bun]));
-    openModal();
   }
 
   const [, drop] = useDrop({
@@ -65,6 +64,9 @@ const BurgerConstructor = () => {
     },
 });
 
+useEffect(() => {
+  dispatch(getUser());
+}, [dispatch]);
 
   return (
     <div ref={drop} className={style.sideMenu + " mt-25"}>
@@ -104,6 +106,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="medium"
           onClick={createOrder}
+          disabled={!ingredients.bun || ingredients.main.length < 1 ? true : false}
         >
           Оформить заказ
         </Button>

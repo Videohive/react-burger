@@ -7,7 +7,6 @@ import {
   initialState
 } from "../initialState"
 
-
 export const ingredientsReducer = (state = initialState.data, action) => {
   switch (action.type) {
     case INGREDIENTS_REQUEST: {

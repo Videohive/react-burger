@@ -1,0 +1,31 @@
+.container {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  gap: 60px;
+}
+
+.sidebar {
+  max-width: 320px;
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 80px;
+  padding: 0;
+}
+
+.menu > li {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.logout_btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

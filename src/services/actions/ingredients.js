@@ -27,7 +27,7 @@ export const getIngredients = () => {
   return function (dispatch) {
     dispatch({ type: INGREDIENTS_REQUEST });
 
-    request('/ingredients')
+    request('ingredients')
       .then(data => {
         dispatch({
           type: INGREDIENTS_SUCCESS,
