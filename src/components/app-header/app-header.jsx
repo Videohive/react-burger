@@ -30,9 +30,11 @@ export default function AppHeader() {
             Лента заказов
           </p>
         </NavLink>
+        <NavLink to="/">
         <div className={styles.logoCenter}>
           <Logo />
         </div>
+        </NavLink>
         <NavLink to="/profile" className={`${styles.constructorElement} ${styles.profileArea}`}>
           <div className={"ml-5 mr-2 mt-4 mb-4"}>
             <ProfileIcon type={getIconType("/profile") || getIconType("/profile/orders")} />
