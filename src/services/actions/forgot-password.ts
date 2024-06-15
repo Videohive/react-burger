@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import request from "../../utils/request";
 
 import {
@@ -6,20 +7,22 @@ import {
   FORGOT_PASSWORD_ERROR,
 } from "./index";
 
-export function forgotPassword(form) {
-  const body = {email: form.email};
+import { TForgotPassword } from "../../utils/types";
+
+export function forgotPassword(form: TForgotPassword) {
+  const { email } = form;
   const data = {
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify({ email }),
     headers: {
-      "Content-type": "application/json; charset=utf-8"
-    }
+      "Content-type": "application/json; charset=utf-8",
+    },
   };
-  return function (dispatch) {
+  return function (dispatch: Dispatch) {
     dispatch({
       type: FORGOT_PASSWORD_SUBMIT,
     });
-    request('password-reset', data)
+    request("password-reset", data)
       .then(() => {
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,

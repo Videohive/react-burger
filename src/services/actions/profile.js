@@ -16,7 +16,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR
-} from "../actions";
+} from ".";
 
 export function getUser() {
   const data = {

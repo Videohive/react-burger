@@ -9,7 +9,7 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 
 export function HomePage() {
   const { isLoaded, hasError, ingredients } = useSelector(
-    (store) => store.data
+    (store: any) => store.data
   );
 
   return (

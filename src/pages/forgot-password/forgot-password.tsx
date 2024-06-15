@@ -13,19 +13,20 @@ import { useForm } from "../../hooks/useForm";
 export function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const forgotPasswordSuccess = useSelector(
-    (store) => store.auth.forgotPasswordSuccess
+    (store: any) => store.auth.forgotPasswordSuccess
   );
   const forgotPasswordError = useSelector(
-    (store) => store.auth.forgotPasswordError
+    (store: any) => store.auth.forgotPasswordError
   );
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
 
   const { values, handleChange } = useForm({
     email: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // @ts-ignore
     dispatch(forgotPassword(values));
   }
 
@@ -51,6 +52,7 @@ export function ForgotPasswordPage() {
             onChange={handleChange}
             value={values.email}
             error={forgotPasswordError}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <Button

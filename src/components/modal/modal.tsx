@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./modal.module.css";
+import { TModal } from '../../utils/types';
 
-const modalRoot = document.getElementById("modal");
+const modalRoot = document.getElementById("modal") as HTMLElement
 
-const Modal = (props) => {
+const Modal = (props: TModal) => {
   const { title, onClose, children } = props;
 
   useEffect(() => {
-    const closeModal = (e) => {
+    const closeModal = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
@@ -24,13 +25,9 @@ const Modal = (props) => {
     };
   }, [onClose]);
 
-  const stopPropagation = (e) => {
-    e.stopPropagation();
-  };
-
   return ReactDOM.createPortal(
     <ModalOverlay onClick={onClose}>
-      <div className={style.modal} onClick={stopPropagation}>
+      <div className={style.modal}>
         <div className="p-10 pb-15">
           <div className={style.header}>
             <div className={style.title}>

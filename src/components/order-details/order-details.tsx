@@ -3,7 +3,7 @@ import orderOk from "../../images/order-ok.png";
 import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
-  const order = useSelector((store) => store.order);
+  const order = useSelector((store: any) => store.order);
   return (
     <div className={`${style.body} pb-15`}>
       {order.isLoaded ? (

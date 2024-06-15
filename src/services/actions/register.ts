@@ -1,29 +1,25 @@
+import { Dispatch } from "redux";
 import request from "../../utils/request";
 
-import {
-  REGISTER_SUBMIT,
-  REGISTER_SUCCESS,
-  REGISTER_ERROR,
-} from "./index";
+import { REGISTER_SUBMIT, REGISTER_SUCCESS, REGISTER_ERROR } from "./index";
 
-export function register(form) {
-  const body = {
-    email: form.email,
-    password: form.password,
-    name: form.name
-  };
+import { TRegister } from "../../utils/types";
+
+export function register(form: TRegister) {
+  const { email, password, name } = form;
+
   const data = {
     method: "POST",
     headers: {
-      "Content-type": "application/json; charset=UTF-8"
+      "Content-type": "application/json; charset=UTF-8",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ email, password, name }),
   };
-  return function (dispatch) {
+  return function (dispatch: Dispatch) {
     dispatch({
       type: REGISTER_SUBMIT,
     });
-    request('auth/register', data)
+    request("auth/register", data)
       .then((data) => {
         dispatch({
           type: REGISTER_SUCCESS,

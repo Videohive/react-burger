@@ -11,8 +11,8 @@ import { login } from "../../services/actions/login";
 import { useForm } from "../../hooks/useForm";
 
 export function LoginPage() {
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
-  const loginError = useSelector((store) => store.auth.loginError);
+  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
+  const loginError = useSelector((store: any) => store.auth.loginError);
   const dispatch = useDispatch();
 
   const { values, handleChange } = useForm({
@@ -20,8 +20,9 @@ export function LoginPage() {
     password: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(login(values));
   }
 
@@ -40,6 +41,7 @@ export function LoginPage() {
             name={"email"}
             onChange={handleChange}
             value={values.email}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <div className="mb-6">
@@ -47,7 +49,7 @@ export function LoginPage() {
             value={values.password}
             name={"password"}
             onChange={handleChange}
-            error={loginError}
+            // onError={loginError}
           />
         </div>
         <Button

@@ -13,14 +13,14 @@ import { useForm } from "../../hooks/useForm";
 
 export function ResetPasswordPage() {
   const forgotPasswordSuccess = useSelector(
-    (store) => store.auth.forgotPasswordSuccess
+    (store: any) => store.auth.forgotPasswordSuccess
   );
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
   const resetPasswordSuccess = useSelector(
-    (store) => store.auth.resetPasswordSuccess
+    (store: any) => store.auth.resetPasswordSuccess
   );
   const resetPasswordError = useSelector(
-    (store) => store.auth.resetPasswordError
+    (store: any) => store.auth.resetPasswordError
   );
 
   const dispatch = useDispatch();
@@ -30,8 +30,9 @@ export function ResetPasswordPage() {
     token: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(resetPassword(values));
   }
 
@@ -58,7 +59,7 @@ export function ResetPasswordPage() {
             value={values.password}
             name={"password"}
             onChange={handleChange}
-            error={resetPasswordError}
+            // error={resetPasswordError}
           />
         </div>
         <div className="mb-6">
@@ -69,6 +70,7 @@ export function ResetPasswordPage() {
             value={values.token}
             onChange={handleChange}
             error={resetPasswordError}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <Button

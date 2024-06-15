@@ -1,22 +1,28 @@
 import style from './constructor-item.module.css';
-import { useRef } from 'react';
-import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import ingredientsPropTypes from '../../utils/IngredientsTypes';
+import React, { useRef, FC } from 'react';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { CONSTRUCTOR_REMOVE_INGREDIENT, CONSTRUCTOR_SORT_INGREDIENT } from '../../services/actions';
 import { useDrop, useDrag } from 'react-dnd';
+import { TConstructorItem } from '../../utils/types';
 
-const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }) => {
+interface ConstructorItemProps {
+  item: TConstructorItem;
+  position?: number;
+  isTop?: boolean;
+  isBottom?: boolean;
+}
+
+const ConstructorItem: FC<ConstructorItemProps> = ({ item, position = 0, isTop = false, isBottom = false }) => {
   const dispatch = useDispatch();
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     if (!item.isLocked) {
       dispatch({ type: CONSTRUCTOR_REMOVE_INGREDIENT, uuid: item.uuid });
-      e.stopPropagation();
     }
   };
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [, dragRef] = useDrag({
     type: 'sort',
@@ -26,7 +32,7 @@ const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }
 
   const [, dropRef] = useDrop({
     accept: 'sort',
-    drop(droppedItem) {
+    drop(droppedItem: { id: string; position: number }) {
       if (position !== droppedItem.position) {
         dispatch({ type: CONSTRUCTOR_SORT_INGREDIENT, from: position, to: droppedItem.position });
       }
@@ -46,7 +52,7 @@ const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }
       )}
       <div className={style.dragItemElement}>
         <ConstructorElement
-          type={isTop ? 'top' : (isBottom ? 'bottom' : null)}
+          type={isTop ? 'top' : (isBottom ? 'bottom' : undefined)}
           isLocked={item.isLocked}
           text={item.name + (isTop ? " (верх)" : (isBottom ? " (низ)" : ""))}
           price={item.price}
@@ -58,9 +64,4 @@ const ConstructorItem = ({ item, position = 0, isTop = false, isBottom = false }
   );
 };
 
-ConstructorItem.propTypes = {
-  item: ingredientsPropTypes.isRequired
-}
-
 export default ConstructorItem;
-

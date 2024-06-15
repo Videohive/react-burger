@@ -1,22 +1,22 @@
-import {BASE_URL} from "./const";
+import { BASE_URL } from "./const";
 
-const checkResponse = (res) => {
+import { TResponse, TOptions, TSuccessResponse } from "./types";
+
+const checkResponse = (res: TResponse): Promise<any> => {
   if (res.ok) {
     return res.json();
   }
   throw new Error(`Ошибка ${res.status}`);
 };
 
-const checkSuccess = (res) => {
+const checkSuccess = (res: any): TSuccessResponse => {
   if (res && res.success) {
     return res;
   }
   throw new Error(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint, options = {}) => {
-  // console.log(`${BASE_URL}/${endpoint}`)
-  // console.log(options)
+const request = (endpoint: string, options?: TOptions): Promise<TSuccessResponse> => {
   return fetch(`${BASE_URL}/${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);

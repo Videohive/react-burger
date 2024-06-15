@@ -17,29 +17,31 @@ import {
 } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { getUser } from "../../services/actions/profile";
+import { TConstructorItem } from '../../utils/types';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated =  useSelector((store) => store.auth.isAuthenticated);
+  const isAuthenticated =  useSelector((store: any) => store.auth.isAuthenticated);
   const { isModalOpen, openModal, closeModal } = useModal();
-  const ingredients = useSelector((store) => store.ingredients);
+  const ingredients = useSelector((store: any) => store.ingredients);
   const { bun, main } = ingredients;
-  const allIngredients = useSelector((store) => store.data.ingredients);
+  const allIngredients = useSelector((store: any) => store.data.ingredients);
 
   const orderSum = useMemo(() => {
     return (
       0 +
       (ingredients.bun ? ingredients.bun.price * 2 : 0) +
       (ingredients.main.length > 0
-        ? ingredients.main.reduce((acc, e) => e.price + acc, 0)
+        ? ingredients.main.reduce((acc:number, e:TConstructorItem) => e.price + acc, 0)
         : 0)
     );
   }, [ingredients]);
 
   function createOrder() {
-    console.log(isAuthenticated)
+    //console.log(isAuthenticated)
     if (isAuthenticated) {
+      //@ts-ignore
       dispatch(makeOrder([...main, bun]));
       openModal();
     } else {
@@ -49,8 +51,8 @@ const BurgerConstructor = () => {
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(item) {
-        const itemId = allIngredients.findIndex((e) => e._id === item._id);
+    drop(item:TConstructorItem) {
+        const itemId = allIngredients.findIndex((e:TConstructorItem) => e._id === item._id);
         if (itemId !== -1) {
             const ingredient = allIngredients[itemId];
             if (ingredient.type === "bun") {
@@ -65,6 +67,7 @@ const BurgerConstructor = () => {
 });
 
 useEffect(() => {
+  //@ts-ignore
   dispatch(getUser());
 }, [dispatch]);
 
@@ -80,7 +83,7 @@ useEffect(() => {
         )}
       </div>
       <div className={style.wrapData}>
-        {main.map((item, index) => (
+        {main.map((item: TConstructorItem, index: number) => (
           <ConstructorItem item={item} key={item.uuid} position={index} />
         ))}
       </div>

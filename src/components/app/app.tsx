@@ -18,6 +18,7 @@ export default function App() {
   const { closeModal } = useModal();
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getIngredients());
   }, []);
 

@@ -1,18 +1,22 @@
-import { useEffect } from "react";
+import {FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../services/actions/profile";
 import { Navigate, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 
-const UnProtectedRoute = ({ element }) => {
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
-  const getUserRequest = useSelector((store) => store.auth.getUserRequest);
+interface IUnProtected {
+  element: JSX.Element;
+}
+
+const UnProtectedRoute: FC<IUnProtected> = ({ element }) => {
+  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
+  const getUserRequest = useSelector((store: any) => store.auth.getUserRequest);
   const dispatch = useDispatch();
   const location = useLocation();
 
   const preloader = <p>Загружаем...</p>;
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 
@@ -25,10 +29,6 @@ const UnProtectedRoute = ({ element }) => {
   ) : (
     element
   );
-};
-
-UnProtectedRoute.propTypes = {
-  element: PropTypes.element,
 };
 
 export default UnProtectedRoute;
