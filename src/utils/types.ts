@@ -11,12 +11,6 @@ export type TUserResponse = {
   email: string;
 }
 
-export type TResponse = {
-  ok: boolean;
-  status: number;
-  json: () => Promise<any>;
-}
-
 export type TOptions = {
   method?: string;
   headers?: Record<string, string>;

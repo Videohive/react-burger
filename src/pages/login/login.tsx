@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import {
   Button,
   Input,
@@ -11,8 +11,8 @@ import { login } from "../../services/actions/login";
 import { useForm } from "../../hooks/useForm";
 
 export function LoginPage() {
-  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
-  const loginError = useSelector((store: any) => store.auth.loginError);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
+  const loginError = useSelector((store) => store.auth.loginError);
   const dispatch = useDispatch();
 
   const { values, handleChange } = useForm({

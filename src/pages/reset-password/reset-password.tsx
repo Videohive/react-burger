@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 
 import {
   Button,
@@ -13,14 +13,14 @@ import { useForm } from "../../hooks/useForm";
 
 export function ResetPasswordPage() {
   const forgotPasswordSuccess = useSelector(
-    (store: any) => store.auth.forgotPasswordSuccess
+    (store) => store.auth.forgotPasswordSuccess
   );
-  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
   const resetPasswordSuccess = useSelector(
-    (store: any) => store.auth.resetPasswordSuccess
+    (store) => store.auth.resetPasswordSuccess
   );
   const resetPasswordError = useSelector(
-    (store: any) => store.auth.resetPasswordError
+    (store) => store.auth.resetPasswordError
   );
 
   const dispatch = useDispatch();

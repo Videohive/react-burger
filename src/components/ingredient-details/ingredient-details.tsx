@@ -1,14 +1,14 @@
 import style from "./ingredient-details.module.css";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { SELECT_INGREDIENT } from "../../services/actions";
 import { useParams } from "react-router-dom";
 import { TIngredient } from '../../utils/types';
 
 const IngredientDetails = () => {
   const dispatch = useDispatch();
-  const ingredients: TIngredient[] = useSelector((store: any) => store.data.ingredients);
-  const selectedIngredient: TIngredient | null = useSelector((store: any) => store.ingredientDetails.selectedIngredient);
+  const ingredients: TIngredient[] = useSelector((store) => store.data.ingredients);
+  const selectedIngredient: TIngredient | null = useSelector((store) => store.ingredientDetails.selectedIngredient);
   const { ingredientId } = useParams();
 
   useEffect(() => {

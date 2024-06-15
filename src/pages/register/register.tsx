@@ -1,5 +1,5 @@
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { register } from "../../services/actions/register";
 
 import {
@@ -11,7 +11,7 @@ import styles from "./register.module.css";
 import { useForm } from "../../hooks/useForm";
 
 export function RegisterPage() {
-  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const { values, handleChange } = useForm({

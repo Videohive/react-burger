@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { Navigate } from "react-router-dom";
 import { FC, useState, useEffect } from "react";
 import { getUser } from "../../services/actions/profile";
@@ -8,8 +8,8 @@ interface IProtected {
 }
 
 const ProtectedRouted: FC<IProtected> = ({ element }) => {
-  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
-  const getUserRequest = useSelector((store: any) => store.auth.getUserRequest);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
+  const getUserRequest = useSelector((store) => store.auth.getUserRequest);
   const [isUserLoaded, setUserLoaded] = useState(false);
   const dispatch = useDispatch();
 

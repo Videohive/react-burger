@@ -1,7 +1,7 @@
 import style from './constructor-item.module.css';
 import React, { useRef, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/types";
 import { CONSTRUCTOR_REMOVE_INGREDIENT, CONSTRUCTOR_SORT_INGREDIENT } from '../../services/actions';
 import { useDrop, useDrag } from 'react-dnd';
 import { TConstructorItem } from '../../utils/types';

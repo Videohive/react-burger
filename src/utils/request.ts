@@ -1,8 +1,8 @@
 import { BASE_URL } from "./const";
 
-import { TResponse, TOptions, TSuccessResponse } from "./types";
+import { TOptions, TSuccessResponse } from "./types";
 
-const checkResponse = (res: TResponse): Promise<any> => {
+const checkResponse = (res: Response): Promise<any> => {
   if (res.ok) {
     return res.json();
   }

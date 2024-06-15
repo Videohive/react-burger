@@ -1,7 +1,7 @@
 import styles from "./profile-edit.module.css";
 
 import React, { SyntheticEvent, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import {
   Button,
   Input,
@@ -13,7 +13,7 @@ import { useForm } from "../../hooks/useForm";
 export function ProfileEdit() {
   const dispatch = useDispatch();
 
-  const { name, email, password } = useSelector((store: any) => store.auth.user);
+  const { name, email, password } = useSelector((store) => store.auth.user);
 
   const { values, handleChange, setValues } = useForm({
     name: name || "",

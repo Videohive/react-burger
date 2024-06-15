@@ -3,7 +3,7 @@
 import React from 'react';
 import style from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from 'react-redux';
+import { useSelector } from "../../services/types";
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from "react-router-dom";
 import { TIngredient } from '../../utils/types';
@@ -16,7 +16,7 @@ type IngredientProps = {
 const Ingredient: React.FC<IngredientProps> = ({ data, onSelect }) => {
   const location = useLocation();
   const { _id, image, name, price } = data;
-  const { bun, main } = useSelector((store: any) => store.ingredients);
+  const { bun, main } = useSelector((store) => store.ingredients);
 
   const countItems = main.filter((item: TIngredient) => item._id === _id).length;
   const countBuns = bun?._id === _id ? 2 : 0;

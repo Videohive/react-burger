@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { forgotPassword } from "../../services/actions/forgot-password";
 
 import {
@@ -13,12 +13,12 @@ import { useForm } from "../../hooks/useForm";
 export function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const forgotPasswordSuccess = useSelector(
-    (store: any) => store.auth.forgotPasswordSuccess
+    (store) => store.auth.forgotPasswordSuccess
   );
   const forgotPasswordError = useSelector(
-    (store: any) => store.auth.forgotPasswordError
+    (store) => store.auth.forgotPasswordError
   );
-  const isAuthenticated = useSelector((store: any) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
 
   const { values, handleChange } = useForm({
     email: "",

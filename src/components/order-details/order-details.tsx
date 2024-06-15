@@ -1,9 +1,9 @@
 import style from "./order-details.module.css";
 import orderOk from "../../images/order-ok.png";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 
 const OrderDetails = () => {
-  const order = useSelector((store: any) => store.order);
+  const order = useSelector((store) => store.order);
   return (
     <div className={`${style.body} pb-15`}>
       {order.isLoaded ? (

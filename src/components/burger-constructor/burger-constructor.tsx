@@ -9,7 +9,7 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { useModal } from "../../hooks/use-modal";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { useDrop } from "react-dnd";
 import {
   addIngredient,
@@ -22,18 +22,21 @@ import { TConstructorItem } from '../../utils/types';
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated =  useSelector((store: any) => store.auth.isAuthenticated);
+  const isAuthenticated =  useSelector((store) => store.auth.isAuthenticated);
   const { isModalOpen, openModal, closeModal } = useModal();
-  const ingredients = useSelector((store: any) => store.ingredients);
+  const ingredients = useSelector((store) => store.ingredients);
   const { bun, main } = ingredients;
-  const allIngredients = useSelector((store: any) => store.data.ingredients);
+  const allIngredients = useSelector((store) => store.data.ingredients);
 
   const orderSum = useMemo(() => {
     return (
       0 +
       (ingredients.bun ? ingredients.bun.price * 2 : 0) +
-      (ingredients.main.length > 0
-        ? ingredients.main.reduce((acc:number, e:TConstructorItem) => e.price + acc, 0)
+      (ingredients.main && ingredients.main.length > 0
+        //@ts-ignore
+        ? ingredients.main.reduce((acc: any, e: TConstructorItem) => {
+            return e.price + acc;
+          }, 0)
         : 0)
     );
   }, [ingredients]);

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./modal.module.css";
@@ -25,9 +24,13 @@ const Modal = (props: TModal) => {
     };
   }, [onClose]);
 
+  const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
+
   return ReactDOM.createPortal(
     <ModalOverlay onClick={onClose}>
-      <div className={style.modal}>
+      <div className={style.modal} onClick={stopPropagation}>
         <div className="p-10 pb-15">
           <div className={style.header}>
             <div className={style.title}>
@@ -43,12 +46,6 @@ const Modal = (props: TModal) => {
     </ModalOverlay>,
     modalRoot
   );
-};
-
-Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
 };
 
 export default Modal;
