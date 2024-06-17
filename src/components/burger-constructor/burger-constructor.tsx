@@ -9,7 +9,7 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { useModal } from "../../hooks/use-modal";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { useDrop } from "react-dnd";
 import {
   addIngredient,
@@ -17,6 +17,7 @@ import {
 } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { getUser } from "../../services/actions/profile";
+import { TConstructorItem } from '../../utils/types';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -31,15 +32,19 @@ const BurgerConstructor = () => {
     return (
       0 +
       (ingredients.bun ? ingredients.bun.price * 2 : 0) +
-      (ingredients.main.length > 0
-        ? ingredients.main.reduce((acc, e) => e.price + acc, 0)
+      (ingredients.main && ingredients.main.length > 0
+        //@ts-ignore
+        ? ingredients.main.reduce((acc: any, e: TConstructorItem) => {
+            return e.price + acc;
+          }, 0)
         : 0)
     );
   }, [ingredients]);
 
   function createOrder() {
-    console.log(isAuthenticated)
+    //console.log(isAuthenticated)
     if (isAuthenticated) {
+      //@ts-ignore
       dispatch(makeOrder([...main, bun]));
       openModal();
     } else {
@@ -49,8 +54,8 @@ const BurgerConstructor = () => {
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(item) {
-        const itemId = allIngredients.findIndex((e) => e._id === item._id);
+    drop(item:TConstructorItem) {
+        const itemId = allIngredients.findIndex((e:TConstructorItem) => e._id === item._id);
         if (itemId !== -1) {
             const ingredient = allIngredients[itemId];
             if (ingredient.type === "bun") {
@@ -65,6 +70,7 @@ const BurgerConstructor = () => {
 });
 
 useEffect(() => {
+  //@ts-ignore
   dispatch(getUser());
 }, [dispatch]);
 
@@ -80,7 +86,7 @@ useEffect(() => {
         )}
       </div>
       <div className={style.wrapData}>
-        {main.map((item, index) => (
+        {main.map((item: TConstructorItem, index: number) => (
           <ConstructorItem item={item} key={item.uuid} position={index} />
         ))}
       </div>

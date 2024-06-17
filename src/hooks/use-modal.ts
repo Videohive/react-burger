@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 export const useModal = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);

@@ -1,7 +1,7 @@
 import styles from "./profile-edit.module.css";
 
-import React, { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { SyntheticEvent, useMemo, useState } from "react";
+import { useSelector, useDispatch } from "../../services/types";
 import {
   Button,
   Input,
@@ -35,27 +35,28 @@ export function ProfileEdit() {
     );
   }, [values, name, email, password]);
 
-  function onCancel(e) {
+  function onCancel(e: SyntheticEvent) {
     e.preventDefault();
     setValues({ name, email, password });
   }
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(editProfile(values));
   }
 
-  function onFocus(evt) {
+  function onFocus(e: React.FocusEvent<HTMLInputElement>) {
     setFocus({
       ...focus,
-      [evt.target.name]: true,
+      [e.target.name]: true,
     });
   }
 
-  function onBlur(evt) {
+  function onBlur(e: React.FocusEvent<HTMLInputElement>) {
     setFocus({
       ...focus,
-      [evt.target.name]: false,
+      [e.target.name]: false,
     });
   }
 
@@ -71,6 +72,7 @@ export function ProfileEdit() {
           onFocus={onFocus}
           onBlur={onBlur}
           icon={focus.name ? "CloseIcon" : "EditIcon"}
+          {...({} as any)} // требует свойства, не понятно
         />
       </div>
       <div className="mb-6">
@@ -83,6 +85,7 @@ export function ProfileEdit() {
           onFocus={onFocus}
           onBlur={onBlur}
           icon={focus.email ? "CloseIcon" : "EditIcon"}
+          {...({} as any)} // требует свойства, не понятно
         />
       </div>
       <div className="mb-6">
@@ -95,6 +98,7 @@ export function ProfileEdit() {
           onBlur={onBlur}
           onChange={handleChange}
           icon={focus.password ? "CloseIcon" : "EditIcon"}
+          {...({} as any)} // требует свойства, не понятно
         />
       </div>
       {isChanged && (

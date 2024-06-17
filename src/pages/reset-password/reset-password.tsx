@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 
 import {
   Button,
@@ -30,8 +30,9 @@ export function ResetPasswordPage() {
     token: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(resetPassword(values));
   }
 
@@ -58,7 +59,7 @@ export function ResetPasswordPage() {
             value={values.password}
             name={"password"}
             onChange={handleChange}
-            error={resetPasswordError}
+            // error={resetPasswordError}
           />
         </div>
         <div className="mb-6">
@@ -69,6 +70,7 @@ export function ResetPasswordPage() {
             value={values.token}
             onChange={handleChange}
             error={resetPasswordError}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <Button

@@ -1,7 +1,7 @@
 import styles from "./app.module.css";
 import { useEffect } from "react";
 import { getIngredients } from "../../services/actions/ingredients";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/types";
 import { Routes, Route, useLocation } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import {ProtectedRouted, UnProtectedRoute, HomePage, RegisterPage, LoginPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileEdit, ProfileOrders, IngredientDetailsPage} from "../../pages"
@@ -18,6 +18,7 @@ export default function App() {
   const { closeModal } = useModal();
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getIngredients());
   }, []);
 

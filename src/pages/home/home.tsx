@@ -1,5 +1,5 @@
 import styles from "./home.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,7 +8,7 @@ import BurgerIngredients from "../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 
 export function HomePage() {
-  const { isLoaded, hasError, ingredients } = useSelector(
+  const { isLoading, hasError, ingredients } = useSelector(
     (store) => store.data
   );
 
@@ -16,7 +16,7 @@ export function HomePage() {
     <>
       <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
-          {!isLoaded ? (
+          {isLoading ? (
             <p>Загружаем...</p>
           ) : (
             <>

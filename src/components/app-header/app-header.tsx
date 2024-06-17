@@ -10,8 +10,13 @@ import {NavLink, useLocation } from "react-router-dom";
 export default function AppHeader() {
   const location = useLocation();
 
-  const getIconType = (path) => (location.pathname === path ? "primary" : "secondary");
-  const getTextClass = (path) => `text text_type_main-default ${location.pathname === path ? "" : "text_color_inactive"}`;
+  const getIconType = (path: string): "primary" | "secondary" => {
+    return location.pathname === path ? "primary" : "secondary";
+  };
+
+  const getTextClass = (path: string): string => {
+    return `text text_type_main-default ${location.pathname === path ? "" : "text_color_inactive"}`;
+  };
 
   return (
     <header className={styles.appHeader}>

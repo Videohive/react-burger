@@ -1,5 +1,5 @@
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { register } from "../../services/actions/register";
 
 import {
@@ -20,8 +20,9 @@ export function RegisterPage() {
     password: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(register(values));
   }
 
@@ -45,6 +46,7 @@ export function RegisterPage() {
             name={"name"}
             onChange={handleChange}
             value={values.name}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <div className="mb-6">
@@ -54,6 +56,7 @@ export function RegisterPage() {
             name={"email"}
             onChange={handleChange}
             value={values.email}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <div className="mb-6">

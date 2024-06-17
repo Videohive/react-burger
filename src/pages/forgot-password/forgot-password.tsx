@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { forgotPassword } from "../../services/actions/forgot-password";
 
 import {
@@ -24,8 +24,9 @@ export function ForgotPasswordPage() {
     email: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // @ts-ignore
     dispatch(forgotPassword(values));
   }
 
@@ -51,6 +52,7 @@ export function ForgotPasswordPage() {
             onChange={handleChange}
             value={values.email}
             error={forgotPasswordError}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <Button

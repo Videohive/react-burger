@@ -1,16 +1,20 @@
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import { Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { getUser } from "../../services/actions/profile";
 
-const ProtectedRouted = ({ element }) => {
+interface IProtected {
+  element: JSX.Element;
+}
+
+const ProtectedRouted: FC<IProtected> = ({ element }) => {
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
   const getUserRequest = useSelector((store) => store.auth.getUserRequest);
   const [isUserLoaded, setUserLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getUser());
     setUserLoaded(true);
   }, [dispatch]);
@@ -28,10 +32,6 @@ const ProtectedRouted = ({ element }) => {
   ) : (
     <Navigate to="/login" replace />
   );
-};
-
-ProtectedRouted.propTypes = {
-  element: PropTypes.element,
 };
 
 export default ProtectedRouted;

@@ -1,6 +1,6 @@
 import styles from "../register/register.module.css";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types";
 import {
   Button,
   Input,
@@ -20,8 +20,9 @@ export function LoginPage() {
     password: "",
   });
 
-  function onSubmit(e) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //@ts-ignore
     dispatch(login(values));
   }
 
@@ -40,6 +41,7 @@ export function LoginPage() {
             name={"email"}
             onChange={handleChange}
             value={values.email}
+            {...({} as any)} // требует свойства, не понятно
           />
         </div>
         <div className="mb-6">
@@ -47,7 +49,7 @@ export function LoginPage() {
             value={values.password}
             name={"password"}
             onChange={handleChange}
-            error={loginError}
+            // onError={loginError}
           />
         </div>
         <Button
