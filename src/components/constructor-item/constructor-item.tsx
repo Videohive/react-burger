@@ -3,10 +3,11 @@ import React, { useRef, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "../../services/types";
 import { CONSTRUCTOR_REMOVE_INGREDIENT, CONSTRUCTOR_SORT_INGREDIENT } from '../../services/actions';
+import { sortIngredientAction, removeIngredientAction } from '../../services/actions/constructor-item';
 import { useDrop, useDrag } from 'react-dnd';
 import { TConstructorItem } from '../../utils/types';
 
-interface ConstructorItemProps {
+export interface ConstructorItemProps {
   item: TConstructorItem;
   position?: number;
   isTop?: boolean;
@@ -18,7 +19,7 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ item, position = 0, isTop =
 
   const handleClose = () => {
     if (!item.isLocked) {
-      dispatch({ type: CONSTRUCTOR_REMOVE_INGREDIENT, uuid: item.uuid });
+      dispatch(removeIngredientAction(item.uuid));
     }
   };
 
@@ -34,7 +35,8 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ item, position = 0, isTop =
     accept: 'sort',
     drop(droppedItem: { id: string; position: number }) {
       if (position !== droppedItem.position) {
-        dispatch({ type: CONSTRUCTOR_SORT_INGREDIENT, from: position, to: droppedItem.position });
+        dispatch(sortIngredientAction(position, droppedItem.position));
+        // dispatch({ type: CONSTRUCTOR_SORT_INGREDIENT, from: position, to: droppedItem.position });
       }
     }
   });

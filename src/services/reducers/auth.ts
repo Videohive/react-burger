@@ -29,7 +29,46 @@ import {
   REFRESH_TOKEN_SUCCESS
 } from "../actions";
 
-const InitialState = {
+import { TProfile } from "../../utils/types";
+import { TRegisterActions } from '../actions/register';
+import { TForgotPasswordActions } from '../actions/forgot-password';
+import { TResetPasswordActions } from '../actions/reset-password';
+import { TLoginActions } from '../actions/login';
+import { TProfileActions } from '../actions/profile';
+
+type TAuthState  = {
+  isAuthenticated: boolean;
+
+  user: TProfile;
+
+  registerRequest: boolean;
+  registerError: boolean;
+
+  loginRequest: boolean;
+  loginError: boolean;
+
+  forgotPasswordRequest: boolean;
+  forgotPasswordSuccess: boolean;
+  forgotPasswordError: boolean;
+
+  resetPasswordRequest: boolean;
+  resetPasswordSuccess: boolean;
+  resetPasswordError: boolean;
+
+  editProfileRequest: boolean;
+  editProfileError: boolean;
+
+  getUserRequest: boolean;
+  getUserError: boolean;
+
+  refreshTokenRequest: boolean;
+  refreshTokenError: boolean;
+
+  logoutRequest: boolean;
+  logoutError: boolean;
+};
+
+const InitialState : TAuthState = {
   isAuthenticated: false,
 
   user: {
@@ -65,7 +104,14 @@ const InitialState = {
   logoutError: false
 };
 
-export const authReducer = (state = InitialState, action) => {
+type TAuthActions =
+  | TRegisterActions
+  | TForgotPasswordActions
+  | TResetPasswordActions
+  | TLoginActions
+  | TProfileActions
+
+export const authReducer = (state = InitialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case REGISTER_SUBMIT: {
       return {
@@ -129,7 +175,7 @@ export const authReducer = (state = InitialState, action) => {
       return {
         ...state,
         forgotPasswordRequest: true,
-        forgotPasswordFailed: false,
+        forgotPasswordError: false,
         forgotPasswordSuccess: false,
       }
     }
@@ -146,7 +192,7 @@ export const authReducer = (state = InitialState, action) => {
       return {
         ...state,
         forgotPasswordRequest: false,
-        forgotPasswordFailed: true,
+        forgotPasswordError: true,
       }
     }
 
@@ -282,7 +328,7 @@ export const authReducer = (state = InitialState, action) => {
         ...state,
         isAuthenticated: false,
         logoutRequest: false,
-        logoutFailed: true,
+        logoutError: true,
       }
     }
 

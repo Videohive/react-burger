@@ -9,6 +9,7 @@ import {
 
 import { login } from "../../services/actions/login";
 import { useForm } from "../../hooks/useForm";
+import { TLogin } from "../../utils/types";
 
 export function LoginPage() {
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
@@ -22,8 +23,7 @@ export function LoginPage() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //@ts-ignore
-    dispatch(login(values));
+    dispatch(login(values as TLogin));
   }
 
   if (isAuthenticated) {

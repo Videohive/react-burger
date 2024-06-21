@@ -9,6 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useForm } from "../../hooks/useForm";
+import { TForgotPassword } from "../../utils/types";
 
 export function ForgotPasswordPage() {
   const dispatch = useDispatch();
@@ -26,8 +27,7 @@ export function ForgotPasswordPage() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // @ts-ignore
-    dispatch(forgotPassword(values));
+    dispatch(forgotPassword(values as TForgotPassword));
   }
 
   if (isAuthenticated) {

@@ -16,7 +16,6 @@ const UnProtectedRoute: FC<IUnProtected> = ({ element }) => {
   const preloader = <p>Загружаем...</p>;
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 

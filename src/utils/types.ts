@@ -42,6 +42,12 @@ export type TConstructorItem = TIngredient & {
   isLocked?:boolean
 }
 
+export type TConstructorProps = TConstructorItem & {
+  position?: number;
+  isTop?: boolean;
+  isBottom?: boolean;
+}
+
 export type TModal = {
   title?: string;
   children: ReactElement;
@@ -50,5 +56,6 @@ export type TModal = {
 
 export type TRegister = Pick<TProfile, 'name' | 'email' | 'password'>
 export type TLogin = Pick<TProfile, 'email' | 'password'>
+export type TUserData = Pick<TProfile, 'name' | 'email'>
 export type TForgotPassword = Pick<TProfile, 'email'>
 export type TResetPassword = Pick<TProfile, 'password'> & { token: string };

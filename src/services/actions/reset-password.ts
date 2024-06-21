@@ -1,4 +1,4 @@
-import { Dispatch } from "redux";
+import { AppThunk } from '../types';
 import request from "../../utils/request";
 
 import {
@@ -9,7 +9,36 @@ import {
 
 import { TResetPassword } from "../../utils/types";
 
-export function resetPassword(form: TResetPassword) {
+export interface IResetPasswordAction {
+  readonly type: typeof RESET_PASSWORD_SUBMIT,
+}
+
+export interface IResetPasswordSuccessAction {
+  readonly type: typeof RESET_PASSWORD_SUCCESS,
+}
+
+export interface IResetPasswordFailedAction {
+  readonly type: typeof RESET_PASSWORD_ERROR,
+}
+
+export type TResetPasswordActions =
+  | IResetPasswordAction
+  | IResetPasswordSuccessAction
+  | IResetPasswordFailedAction;
+
+export const resetPasswordAction = (): IResetPasswordAction => ({
+  type: RESET_PASSWORD_SUBMIT,
+});
+
+export const resetPasswordSuccessAction = (): IResetPasswordSuccessAction => ({
+  type: RESET_PASSWORD_SUCCESS,
+});
+
+export const resetPasswordFailedAction = (): IResetPasswordFailedAction => ({
+  type: RESET_PASSWORD_ERROR,
+});
+
+export const resetPassword = (form: TResetPassword): AppThunk => {
   const { token, password } = form;
   const data = {
     method: "POST",
@@ -18,20 +47,14 @@ export function resetPassword(form: TResetPassword) {
       "Content-Type": "application/json",
     },
   };
-  return function (dispatch: Dispatch) {
-    dispatch({
-      type: RESET_PASSWORD_SUBMIT,
-    });
+  return function (dispatch) {
+    dispatch(resetPasswordAction());
     request("password-reset/reset", data)
       .then((data) => {
-        dispatch({
-          type: RESET_PASSWORD_SUCCESS,
-        });
+        dispatch(resetPasswordSuccessAction());
       })
       .catch((err) => {
-        dispatch({
-          type: RESET_PASSWORD_ERROR,
-        });
+        dispatch(resetPasswordFailedAction());
         console.log(err);
       });
   };

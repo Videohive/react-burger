@@ -11,7 +11,9 @@ import {
 } from './reducers/rootReducer';
 
 const composeEnhancers =
+    // @ts-ignore
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+      // @ts-ignore
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) :
   compose;
 

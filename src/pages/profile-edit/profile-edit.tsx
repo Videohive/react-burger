@@ -9,6 +9,7 @@ import {
 
 import { editProfile } from "../../services/actions/profile";
 import { useForm } from "../../hooks/useForm";
+import { TProfile } from "../../utils/types";
 
 export function ProfileEdit() {
   const dispatch = useDispatch();
@@ -42,8 +43,7 @@ export function ProfileEdit() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //@ts-ignore
-    dispatch(editProfile(values));
+    dispatch(editProfile(values as TProfile));
   }
 
   function onFocus(e: React.FocusEvent<HTMLInputElement>) {

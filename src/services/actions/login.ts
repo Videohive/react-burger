@@ -1,11 +1,42 @@
-import { Dispatch } from "redux";
+import { AppThunk } from "../types";
 import request from "../../utils/request";
 
 import { LOGIN_SUBMIT, LOGIN_SUCCESS, LOGIN_ERROR } from "./index";
 
-import { TLogin } from "../../utils/types";
+import { TUserData, TLogin } from "../../utils/types";
 
-export function login(form: TLogin) {
+export interface ILoginAction {
+  readonly type: typeof LOGIN_SUBMIT;
+}
+
+export interface ILoginSuccessAction {
+  readonly type: typeof LOGIN_SUCCESS;
+  readonly user: TUserData;
+}
+
+export interface ILoginFailedAction {
+  readonly type: typeof LOGIN_ERROR;
+}
+
+export type TLoginActions =
+  | ILoginAction
+  | ILoginSuccessAction
+  | ILoginFailedAction;
+
+export const loginAction = (): ILoginAction => ({
+  type: LOGIN_SUBMIT,
+});
+
+export const loginSuccessAction = (user: TUserData): ILoginSuccessAction => ({
+  type: LOGIN_SUCCESS,
+  user,
+});
+
+export const loginFailedAction = (): ILoginFailedAction => ({
+  type: LOGIN_ERROR,
+});
+
+export const login = (form: TLogin): AppThunk => {
   const { email, password } = form;
   const data = {
     method: "POST",
@@ -14,23 +45,16 @@ export function login(form: TLogin) {
       "Content-type": "application/json; charset=UTF-8",
     },
   };
-  return function (dispatch: Dispatch) {
-    dispatch({
-      type: LOGIN_SUBMIT,
-    });
+  return function (dispatch) {
+    dispatch(loginAction());
     request("auth/login", data)
       .then((data) => {
-        dispatch({
-          type: LOGIN_SUCCESS,
-          user: data.user,
-        });
+        dispatch(loginSuccessAction(data.user));
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
       })
       .catch((err) => {
-        dispatch({
-          type: LOGIN_ERROR,
-        });
+        dispatch(loginFailedAction())
         console.log(err);
       });
   };
