@@ -13,7 +13,7 @@ export const useModal = () => {
 
   const closeModal = useCallback(() => {
     if (location.pathname !== "/") {
-      navigate('/');
+      navigate(-1);
     }
     setIsModalOpen(false);
   }, [location.pathname, navigate]);

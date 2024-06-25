@@ -4,10 +4,11 @@ import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "../../services/types";
 import { Routes, Route, useLocation } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
-import {ProtectedRouted, UnProtectedRoute, HomePage, RegisterPage, LoginPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileEdit, ProfileOrders, IngredientDetailsPage} from "../../pages"
+import { ProtectedRouted, UnProtectedRoute, HomePage, RegisterPage, LoginPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileEdit, ProfileOrders, IngredientDetailsPage, FeedPage, OrderDetailsPage } from "../../pages"
 import Modal from '../modal/modal';
 import { useModal } from '../../hooks/use-modal';
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { OrderDetailCard } from "../order-detail-card/order-detail-card";
 
 export default function App() {
 
@@ -27,6 +28,8 @@ export default function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<HomePage/>}/>
+        <Route path="/feed" element={<FeedPage/>}/>
+        <Route path='/feed/:orderId' element={<OrderDetailsPage/>} />
         <Route path="/register"  element={<UnProtectedRoute element={<RegisterPage/>}></UnProtectedRoute>}/>
         <Route path="/login" element={<UnProtectedRoute element={<LoginPage/>}></UnProtectedRoute>}/>
         <Route path="/forgot-password" element={<UnProtectedRoute element={<ForgotPasswordPage/>}></UnProtectedRoute>}/>
@@ -45,6 +48,18 @@ export default function App() {
               element={
                 <Modal title="Детали ингредиента" onClose={closeModal}>
                 <IngredientDetails />
+              </Modal>
+              }
+            />
+        </Routes>
+      )}
+      {background && (
+        <Routes>
+            <Route
+              path='/feed/:orderId'
+              element={
+                <Modal title="Детали заказа" onClose={closeModal}>
+                <OrderDetailCard />
               </Modal>
               }
             />

@@ -14,9 +14,11 @@ const IngredientDetails = () => {
 
   useEffect(() => {
     if (!selectedIngredient && ingredientId && ingredients) {
-      const ingredient = ingredients.find((ingredient) => ingredient._id === ingredientId);
-      if(ingredient){
-      dispatch(selectIngredient(ingredient))
+      const ingredient = ingredients.find(
+        (ingredient) => ingredient._id === ingredientId
+      );
+      if (ingredient) {
+        dispatch(selectIngredient(ingredient));
       }
       // dispatch({
       //   type: SELECT_INGREDIENT,

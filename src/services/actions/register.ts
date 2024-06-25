@@ -1,7 +1,7 @@
 import { AppThunk } from '../types';
 import request from "../../utils/request";
 
-import { REGISTER_SUBMIT, REGISTER_SUCCESS, REGISTER_ERROR } from "./index";
+import { REGISTER_SUBMIT, REGISTER_SUCCESS, REGISTER_ERROR } from ".";
 
 import {TRegister, TUserData } from "../../utils/types";
 

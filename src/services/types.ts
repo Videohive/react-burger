@@ -14,6 +14,9 @@ import { TOrderActionTypes } from './actions/order';
 import { TRegisterActions } from './actions/register';
 import { TResetPasswordActions } from './actions/reset-password';
 import { TConstructorActions } from './actions/constructor-item';
+import {TFeedActions} from './actions/feed';
+import { TWSActions } from './actions/wsActions';
+import { TWSUserOrdersActions } from "./actions/wsUserOrderActions";
 
 type TAppActions =
     | TForgotPasswordActions
@@ -25,6 +28,9 @@ type TAppActions =
     | TRegisterActions
     | TResetPasswordActions
     | TConstructorActions
+    | TFeedActions
+    | TWSActions
+    | TWSUserOrdersActions
 
 export type AppStore = typeof store
 export type RootState = ReturnType<typeof rootReducer>;

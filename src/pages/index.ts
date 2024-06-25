@@ -7,6 +7,8 @@ import {ProfilePage} from "./profile/profile";
 import {ProfileEdit} from "./profile-edit/profile-edit";
 import {ProfileOrders} from "./profile-orders/profile-orders";
 import {IngredientDetailsPage} from "./ingredient-details/ingredient-details";
+import {FeedPage} from "./feed/feed";
+import {OrderDetailsPage} from "./order-details/order-details";
 import ProtectedRouted from "./protected-route/protected-route";
 import UnProtectedRoute from "./unprotected-route/unprotected-route";
 
@@ -20,6 +22,8 @@ export {
     ProfileEdit,
     ProfileOrders,
     IngredientDetailsPage,
+    FeedPage,
+    OrderDetailsPage,
     ProtectedRouted,
     UnProtectedRoute
 };

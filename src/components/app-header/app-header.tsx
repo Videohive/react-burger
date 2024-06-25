@@ -27,11 +27,11 @@ export default function AppHeader() {
           </div>
           <p className={getTextClass("/")}>Конструктор</p>
         </NavLink>
-        <NavLink to="/orders" className={styles.constructorElement}>
+        <NavLink to="/feed" className={styles.constructorElement}>
           <div className={"ml-5 mr-2 mt-4 mb-4"}>
-            <ListIcon type={getIconType("/orders")} />
+            <ListIcon type={getIconType("/feed")} />
           </div>
-          <p className={getTextClass("/orders")}>
+          <p className={getTextClass("/feed")}>
             Лента заказов
           </p>
         </NavLink>
