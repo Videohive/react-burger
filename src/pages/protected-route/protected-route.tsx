@@ -14,7 +14,6 @@ const ProtectedRouted: FC<IProtected> = ({ element }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getUser());
     setUserLoaded(true);
   }, [dispatch]);

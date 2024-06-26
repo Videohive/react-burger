@@ -16,7 +16,10 @@ const checkSuccess = (res: any): TSuccessResponse => {
   throw new Error(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint: string, options?: TOptions): Promise<TSuccessResponse> => {
+const request = (
+  endpoint: string,
+  options?: TOptions
+): Promise<TSuccessResponse> => {
   return fetch(`${BASE_URL}/${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);

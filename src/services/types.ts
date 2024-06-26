@@ -1,9 +1,47 @@
 import {store} from './store'
-import { TypedUseSelectorHook, useDispatch as useReduxDispatch, useSelector as useReduxSelector } from 'react-redux';
+import {TypedUseSelectorHook, useSelector as selectorHook, useDispatch as dispatchHook } from "react-redux";
+import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import {
+  rootReducer
+} from './reducers/rootReducer';
+
+import { TForgotPasswordActions } from './actions/forgot-password';
+import { TIngredientDetailsActions } from './actions/ingredient-details';
+import { TIngredientsActions } from './actions/ingredients';
+import { TLoginActions } from './actions/login';
+import { TProfileActions } from './actions/profile';
+import { TOrderActionTypes } from './actions/order';
+import { TRegisterActions } from './actions/register';
+import { TResetPasswordActions } from './actions/reset-password';
+import { TConstructorActions } from './actions/constructor-item';
+import {TFeedActions} from './actions/feed';
+import { TWSActions } from './actions/wsActions';
+import { TWSUserOrdersActions } from "./actions/wsUserOrderActions";
+
+type TAppActions =
+    | TForgotPasswordActions
+    | TIngredientDetailsActions
+    | TIngredientsActions
+    | TLoginActions
+    | TProfileActions
+    | TOrderActionTypes
+    | TRegisterActions
+    | TResetPasswordActions
+    | TConstructorActions
+    | TFeedActions
+    | TWSActions
+    | TWSUserOrdersActions
 
 export type AppStore = typeof store
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = ThunkDispatch<RootState, unknown, TAppActions>;
 
-export const useDispatch = () => useReduxDispatch<AppDispatch>();
-export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  TAppActions
+>;
+
+export const useDispatch: () => AppDispatch = dispatchHook;
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;

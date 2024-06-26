@@ -16,7 +16,7 @@ export function HomePage() {
     <>
       <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
-          {isLoading ? (
+          {!isLoading ? (
             <p>Загружаем...</p>
           ) : (
             <>

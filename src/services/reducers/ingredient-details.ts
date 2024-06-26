@@ -3,11 +3,21 @@ import {
   UNSELECT_INGREDIENT
 } from "../actions"
 
-const initialState = {
+import {
+  TIngredientDetailsActions
+} from "../actions/ingredient-details"
+
+import { TIngredient } from "../../utils/types";
+
+interface IIngredientDetailsState {
+  selectedIngredient: TIngredient | null;
+}
+
+const initialState: IIngredientDetailsState = {
   selectedIngredient: null,
 }
 
-export const ingredientDetailsReducer = (state = initialState, action) => {
+export const ingredientDetailsReducer = (state = initialState, action:TIngredientDetailsActions): IIngredientDetailsState => {
   switch (action.type) {
 
     case SELECT_INGREDIENT: {

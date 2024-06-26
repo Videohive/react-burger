@@ -10,6 +10,7 @@ import {
 
 import { resetPassword } from "../../services/actions/reset-password";
 import { useForm } from "../../hooks/useForm";
+import { TResetPassword } from "../../utils/types";
 
 export function ResetPasswordPage() {
   const forgotPasswordSuccess = useSelector(
@@ -32,8 +33,7 @@ export function ResetPasswordPage() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //@ts-ignore
-    dispatch(resetPassword(values));
+    dispatch(resetPassword(values as TResetPassword));
   }
 
   if (isAuthenticated) {

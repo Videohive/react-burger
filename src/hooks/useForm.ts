@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-interface IFormEntryData {
+export interface IFormEntryData {
   [key: string]: string;
 }
 

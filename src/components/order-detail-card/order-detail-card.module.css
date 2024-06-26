@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+}
+
+.list {
+  max-height: 360px;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  flex: 1;
+}
+
+.cost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.number {
+  text-align: center;
+}
+
+.status {
+  color: #00cccc;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

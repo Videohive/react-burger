@@ -6,7 +6,7 @@ const OrderDetails = () => {
   const order = useSelector((store) => store.order);
   return (
     <div className={`${style.body} pb-15`}>
-      {order.isLoaded ? (
+      {order.isLoading ? (
         <>
           <p className="text text_type_digits-large">{order.id}</p>
           <p className={`text text_type_main-medium ${style.info}`}>

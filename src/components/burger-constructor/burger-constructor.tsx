@@ -11,18 +11,15 @@ import { useModal } from "../../hooks/use-modal";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "../../services/types";
 import { useDrop } from "react-dnd";
-import {
-  addIngredient,
-  addBun
-} from "../../services/actions/ingredients";
+import { addIngredient, addBun } from "../../services/actions/ingredients";
 import { makeOrder } from "../../services/actions/order";
 import { getUser } from "../../services/actions/profile";
-import { TConstructorItem } from '../../utils/types';
+import { TConstructorItem, TIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated =  useSelector((store) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
   const { isModalOpen, openModal, closeModal } = useModal();
   const ingredients = useSelector((store) => store.ingredients);
   const { bun, main } = ingredients;
@@ -33,7 +30,6 @@ const BurgerConstructor = () => {
       0 +
       (ingredients.bun ? ingredients.bun.price * 2 : 0) +
       (ingredients.main && ingredients.main.length > 0
-        //@ts-ignore
         ? ingredients.main.reduce((acc: any, e: TConstructorItem) => {
             return e.price + acc;
           }, 0)
@@ -44,9 +40,10 @@ const BurgerConstructor = () => {
   function createOrder() {
     //console.log(isAuthenticated)
     if (isAuthenticated) {
-      //@ts-ignore
-      dispatch(makeOrder([...main, bun]));
-      openModal();
+      if (bun) {
+        dispatch(makeOrder([...main, bun]));
+        openModal();
+      }
     } else {
       navigate("/login");
     }
@@ -54,25 +51,24 @@ const BurgerConstructor = () => {
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(item:TConstructorItem) {
-        const itemId = allIngredients.findIndex((e:TConstructorItem) => e._id === item._id);
-        if (itemId !== -1) {
-            const ingredient = allIngredients[itemId];
-            if (ingredient.type === "bun") {
-                dispatch(addBun(ingredient)); // Используем функцию-криэйтор для добавления булочки
-            } else {
-                dispatch(addIngredient(ingredient)); // Используем функцию-криэйтор для добавления ингредиента
-            }
+    drop(item: TIngredient) {
+      const itemId = allIngredients.findIndex((e) => e._id === item._id);
+      if (itemId !== -1) {
+        const ingredient = allIngredients[itemId];
+        if (ingredient.type === "bun") {
+          dispatch(addBun(ingredient)); // Используем функцию-криэйтор для добавления булочки
         } else {
-            console.error("Элемент не найден");
+          dispatch(addIngredient(ingredient)); // Используем функцию-криэйтор для добавления ингредиента
         }
+      } else {
+        console.error("Элемент не найден");
+      }
     },
-});
+  });
 
-useEffect(() => {
-  //@ts-ignore
-  dispatch(getUser());
-}, [dispatch]);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <div ref={drop} className={style.sideMenu + " mt-25"}>
@@ -112,7 +108,9 @@ useEffect(() => {
           type="primary"
           size="medium"
           onClick={createOrder}
-          disabled={!ingredients.bun || ingredients.main.length < 1 ? true : false}
+          disabled={
+            !ingredients.bun || ingredients.main.length < 1 ? true : false
+          }
         >
           Оформить заказ
         </Button>

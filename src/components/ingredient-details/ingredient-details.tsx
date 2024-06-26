@@ -1,7 +1,8 @@
 import style from "./ingredient-details.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "../../services/types";
-import { SELECT_INGREDIENT } from "../../services/actions";
+// import { SELECT_INGREDIENT } from "../../services/actions";
+import { selectIngredient } from "../../services/actions/ingredient-details";
 import { useParams } from "react-router-dom";
 import { TIngredient } from '../../utils/types';
 
@@ -13,11 +14,16 @@ const IngredientDetails = () => {
 
   useEffect(() => {
     if (!selectedIngredient && ingredientId && ingredients) {
-      const ingredient = ingredients.find((ingredient) => ingredient._id === ingredientId);
-      dispatch({
-        type: SELECT_INGREDIENT,
-        selectedIngredient: ingredient,
-      });
+      const ingredient = ingredients.find(
+        (ingredient) => ingredient._id === ingredientId
+      );
+      if (ingredient) {
+        dispatch(selectIngredient(ingredient));
+      }
+      // dispatch({
+      //   type: SELECT_INGREDIENT,
+      //   selectedIngredient: ingredient,
+      // });
     }
   }, [selectedIngredient, ingredientId, ingredients, dispatch]);
 

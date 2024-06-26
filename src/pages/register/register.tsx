@@ -9,6 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
 import { useForm } from "../../hooks/useForm";
+import { TRegister } from "../../utils/types";
 
 export function RegisterPage() {
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
@@ -22,8 +23,7 @@ export function RegisterPage() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //@ts-ignore
-    dispatch(register(values));
+    dispatch(register(values as TRegister));
   }
 
   if (isAuthenticated) {
