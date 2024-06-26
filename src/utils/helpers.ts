@@ -2,25 +2,25 @@ import { TOrders, TCorrectOrder, TIngredient } from "./types";
 
 export const getIngredients = (ids: string[], data: TIngredient[]) => {
   const result: TIngredient[] = [];
-  const counts: { [id: string]: number } = {};
-  const buns: { [id: string]: boolean } = {};
+  const counts = new Map<string, number>();
+  const buns = new Map<string, boolean>();
 
   ids.forEach((id) => {
-    counts[id] = (counts[id] || 0) + 1;
+    counts.set(id, (counts.get(id) || 0) + 1);
   });
 
   data.forEach((ingredient) => {
-    const count = counts[ingredient._id];
+    const count = counts.get(ingredient._id);
     if (count !== undefined) {
       if (ingredient.type === "bun") {
-        buns[ingredient._id] = true;
-        counts[ingredient._id] = 2;
+        buns.set(ingredient._id, true);
+        counts.set(ingredient._id, 2);
       }
       result.push({ ...ingredient, count });
     }
   });
 
-  if (Object.keys(buns).length === 1) {
+  if (buns.size === 1) {
     return result;
   }
 
@@ -42,41 +42,32 @@ export const getCorrectOrders = (orders: TOrders, data: TIngredient[]) => {
 export function formatDate(date: string) {
   const dateToFormat = new Date(date);
   const currentDate = new Date();
-  const daysAgo = currentDate.getDay() - dateToFormat.getDay();
-  const hours =
-    dateToFormat.getHours() > 9
-      ? dateToFormat.getHours().toString()
-      : "0" + dateToFormat.getHours().toString();
-  const minutes =
-    dateToFormat.getMinutes() > 9
-      ? dateToFormat.getMinutes().toString()
-      : "0" + dateToFormat.getMinutes().toString();
+
+  // Установка времени на начало дня для обеих дат
+  dateToFormat.setHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
+
+  // Вычисление разницы в днях
+  const daysAgo = Math.floor((currentDate.getTime() - dateToFormat.getTime()) / (1000 * 3600 * 24));
+  const hours = new Date(date).getHours().toString().padStart(2, '0');
+  const minutes = new Date(date).getMinutes().toString().padStart(2, '0');
 
   let formattedDate = "";
-  const time = `${hours}:${minutes} i-GMT+${
-    -dateToFormat.getTimezoneOffset() / 60
-  }`;
+  const time = `${hours}:${minutes} i-GMT+${-new Date(date).getTimezoneOffset() / 60}`;
   switch (true) {
-    case daysAgo === 0: {
+    case daysAgo === 0:
       formattedDate += "Сегодня, ";
       break;
-    }
-    case daysAgo === 1: {
+    case daysAgo === 1:
       formattedDate += "Вчера, ";
       break;
-    }
-    case daysAgo > 9 && daysAgo % 10 === 1: {
-      formattedDate += `${daysAgo} день назад, `;
-      break;
-    }
-    case daysAgo % 10 > 1 && daysAgo % 10 < 5: {
+    case daysAgo > 1 && daysAgo < 5:
       formattedDate += `${daysAgo} дня назад, `;
       break;
-    }
-    default: {
-      formattedDate += `${daysAgo} дней назад, `;
-      break;
-    }
+
+    default:
+        formattedDate += `${daysAgo} дней назад, `;
+        break;
   }
   return `${formattedDate + time}`;
 }

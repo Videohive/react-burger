@@ -27,11 +27,11 @@ export const OrderDetailCard: FC<TOrderInfo> = ({ modal = false }) => {
     }, [selectedOrder, orderId, orders, dispatch]);
 
     if (loading) {
-      <p>Загружаем...</p>;
+      return <p>Загружаем...</p>;
     }
 
     if (!selectedOrder) {
-        return (<p>Описание заказа не найдено</p>);
+        return <p>Описание заказа не найдено</p>;
     }
 
     const { number, name, status, ingredients, createdAt } = selectedOrder;
@@ -52,7 +52,7 @@ export const OrderDetailCard: FC<TOrderInfo> = ({ modal = false }) => {
                         <li className={`${styles.card} mb-4`} key={ingredient._id}>
                             <IngredientPreviewIcon ingredient={ingredient} index={index}/>
                             <p className={`${styles.title} text text_type_main-default ml-4 mr-15`}>{ingredient.name}</p>
-                            <div className={`${styles.cost} mr-6`}>
+                            <div className={`${styles.cost}`}>
                                 <p className={"text text_type_digits-default mr-2"}>{`${ingredient.count} x ${ingredient.price}`}</p>
                                 <CurrencyIcon type="primary"/>
                             </div>

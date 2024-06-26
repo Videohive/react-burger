@@ -41,7 +41,7 @@ export function FeedPage() {
   const { total, totalToday } = useSelector((store) => store.ws);
 
   if (loading) {
-    <p>Загружаем...</p>;
+    return <p>Загружаем...</p>;
   }
   return (
     <main className={styles.main}>
@@ -76,13 +76,13 @@ export function FeedPage() {
             </div>
           </div>
           <div>
-            <p className={"text text_type_main-medium mt-15"}>
+            <p className="text text_type_main-medium mt-15">
               Выполнено за все время:
             </p>
             <p className={`${styles.shadow} text text_type_digits-large`}>
               {total.toLocaleString("ru")}
             </p>
-            <p className={"text text_type_main-medium mt-15"}>
+            <p className="text text_type_main-medium mt-15">
               Выполнено за сегодня:
             </p>
             <p className={`${styles.shadow} text text_type_digits-large`}>

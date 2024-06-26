@@ -7,7 +7,7 @@ import {
   WS_GET_ORDERS,
 } from ".";
 
-import { TGetOrdersResponse } from '../../utils/types';
+import { TGetOrdersResponse } from "../../utils/types";
 
 export interface IWSConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
@@ -44,38 +44,42 @@ export type TWSActions =
   | IWSConnectionClosedSuccessAction
   | IWSConnectionGetOrdersAction;
 
-export const wsConnectionStartAction = (url: string): IWSConnectionStartAction => {
+export const wsConnectionStartAction = (
+  url: string
+): IWSConnectionStartAction => {
   return {
-      type: WS_CONNECTION_START,
-      payload: url,
+    type: WS_CONNECTION_START,
+    payload: url,
   };
 };
 
 export const wsConnectionSuccessAction = (): IWSConnectionSuccessAction => {
   return {
-      type: WS_CONNECTION_SUCCESS
+    type: WS_CONNECTION_SUCCESS,
   };
 };
 
-export const wsConnectionErrorAction = (error: Event): IWSConnectionErrorAction => {
-
+export const wsConnectionErrorAction = (
+  error: Event
+): IWSConnectionErrorAction => {
   return {
-      type: WS_CONNECTION_ERROR,
-      payload: error,
+    type: WS_CONNECTION_ERROR,
+    payload: error,
   };
 };
 
-export const wsConnectionClosedAction = (): IWSConnectionClosedSuccessAction => {
+export const wsConnectionClosedAction =
+  (): IWSConnectionClosedSuccessAction => {
+    return {
+      type: WS_CONNECTION_CLOSED_SUCCESS,
+    };
+  };
+
+export const wsConnectionGetOrdersAction = (
+  response: TGetOrdersResponse
+): IWSConnectionGetOrdersAction => {
   return {
-      type: WS_CONNECTION_CLOSED_SUCCESS
+    type: WS_GET_ORDERS,
+    payload: response,
   };
 };
-
-export const wsConnectionGetOrdersAction = (response: TGetOrdersResponse): IWSConnectionGetOrdersAction => {
-  return {
-      type: WS_GET_ORDERS,
-      payload: response,
-  };
-};
-
-

@@ -5,7 +5,8 @@
   left: 0;
   right: 0;
   margin: auto;
-  width: 720px;
+  min-width: 720px;
+  max-width: max-content;
   max-height: max-content;
   background-color: #1c1c1c;
   border-radius: 40px;

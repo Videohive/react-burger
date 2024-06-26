@@ -39,29 +39,34 @@ export default function App() {
           <Route path="orders" element={<ProtectedRouted element={<ProfileOrders  />}/>} />
         </Route>
         <Route path='/ingredients/:ingredientId' element={<IngredientDetailsPage/>} />
+        <Route path='/profile/orders/:orderId' element={<ProtectedRouted element={<OrderDetailsPage/>}/> }/>
       </Routes>
 
       {background && (
         <Routes>
-            <Route
-              path='/ingredients/:ingredientId'
-              element={
-                <Modal title="Детали ингредиента" onClose={closeModal}>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal title="Детали ингредиента" onClose={closeModal}>
                 <IngredientDetails />
               </Modal>
-              }
-            />
-        </Routes>
-      )}
-      {background && (
-        <Routes>
-            <Route
-              path='/feed/:orderId'
-              element={
-                <Modal title="Детали заказа" onClose={closeModal}>
+            }
+          />
+          <Route
+            path="/feed/:orderId"
+            element={
+              <Modal title="Детали заказа" onClose={closeModal}>
                 <OrderDetailCard />
               </Modal>
-              }
+            }
+          />
+          <Route
+            path='/profile/orders/:orderId'
+            element={
+              <Modal title="Детали заказа" onClose={closeModal}>
+                <OrderDetailCard />
+              </Modal>
+                }
             />
         </Routes>
       )}

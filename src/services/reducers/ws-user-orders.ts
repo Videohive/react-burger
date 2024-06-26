@@ -1,8 +1,8 @@
 import {
-  WS_CONNECTION_USER_ORDERS_CLOSED,
-  WS_CONNECTION_USER_ORDERS_ERROR,
-  WS_CONNECTION_USER_ORDERS_START,
-  WS_CONNECTION_USER_ORDERS_SUCCESS,
+  WS_CONNECTION_ORDERS_CLOSED,
+  WS_CONNECTION_ORDERS_ERROR,
+  WS_CONNECTION_ORDERS_START,
+  WS_CONNECTION_ORDERS_SUCCESS,
   WS_GET_USER_ORDERS,
 } from "../actions";
 
@@ -33,20 +33,20 @@ export const wsUserOrdersReducer = (
   action: TWSUserOrdersActions
 ) => {
   switch (action.type) {
-    case WS_CONNECTION_USER_ORDERS_START: {
+    case WS_CONNECTION_ORDERS_START: {
       return {
         ...state,
         loading: true,
       };
     }
-    case WS_CONNECTION_USER_ORDERS_SUCCESS: {
+    case WS_CONNECTION_ORDERS_SUCCESS: {
       return {
         ...state,
         error: undefined,
         wsConnected: true,
       };
     }
-    case WS_CONNECTION_USER_ORDERS_ERROR: {
+    case WS_CONNECTION_ORDERS_ERROR: {
       return {
         ...state,
         error: action.payload,
@@ -54,7 +54,7 @@ export const wsUserOrdersReducer = (
         loading: false,
       };
     }
-    case WS_CONNECTION_USER_ORDERS_CLOSED: {
+    case WS_CONNECTION_ORDERS_CLOSED: {
       return {
         ...state,
         error: undefined,
