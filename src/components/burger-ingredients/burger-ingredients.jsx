@@ -62,9 +62,13 @@ const BurgerIngredients = () => {
         <Tab value="main" active={activeTab === 'main'} onClick={() => handleTabChange('main')}>Начинки</Tab>
       </div>
       <div className={`${style.contentWrap} mt-10 mb-10`} id='scrollPoint' ref={scrollContainerRef} onScroll={handleScrollToTab}>
-        <div className={style.ingredientWrap}>
+        <div className={style.ingredientWrap} data-test="ingredients">
+          <div className={style.ingredientWrap} data-test="bun">
           <h2 className="text text_type_main-medium mb-6" id='bun' ref={bunsSectionRef}>Булки</h2>
+          <div className={style.ingredientWrap} data-test="content">
           {buns.map((data) => <Ingredient key={data._id} data={data} onSelect={handleClickIngredient}/>)}
+          </div>
+          </div>
           <h2 className="text text_type_main-medium mb-6" id='sauce' ref={saucesSectionRef}>Соусы</h2>
           {sauces.map((data) => <Ingredient key={data._id} data={data} onSelect={handleClickIngredient}/>)}
           <h2 className="text text_type_main-medium mb-6" id='main' ref={mainsSectionRef}>Начинки</h2>

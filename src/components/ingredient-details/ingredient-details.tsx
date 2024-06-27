@@ -30,7 +30,7 @@ const IngredientDetails = () => {
   return (
     <>
       {selectedIngredient && (
-        <div className={style.body}>
+        <div className={style.body} data-test="ingredient-details">
           <img src={selectedIngredient.image_large} alt={selectedIngredient.name} className="mb-4" />
 
           <p className="text text_type_main-medium">{selectedIngredient.name}</p>

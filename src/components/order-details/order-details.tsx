@@ -8,7 +8,7 @@ const OrderDetails = () => {
     <div className={`${style.body} pb-15`}>
       {order.isLoading ? (
         <>
-          <p className="text text_type_digits-large">{order.id}</p>
+          <p className="text text_type_digits-large" data-test="order-number">{order.id}</p>
           <p className={`text text_type_main-medium ${style.info}`}>
             идентификатор заказа
           </p>
