@@ -8,19 +8,19 @@ describe("burger constructor", () => {
           "accessToken",
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGM2N2U2OTdlZGUwMDAxZDA2YjhiYiIsImlhdCI6MTcxOTQwNjUzNiwiZXhwIjoxNzE5NDA3NzM2fQ.ZqVj5Z1SowNC31Ys5y-lzjhl9F9TYz6WC29sD76fXIU"
       );
-      cy.intercept("GET", "https://norma.nomoreparties.space/api/ingredients", {
+      cy.intercept("GET", "api/ingredients", {
           fixture: "ingredients.json",
       }).as("ingredients");
-      cy.intercept("GET", "https://norma.nomoreparties.space/api/auth/user", {
+      cy.intercept("GET", "api/auth/user", {
           fixture: "user.json",
       });
-      cy.intercept("POST", "https://norma.nomoreparties.space/api/auth/token", {
+      cy.intercept("POST", "api/auth/token", {
           fixture: "accessToken.json",
       });
-      cy.intercept("POST", "https://norma.nomoreparties.space/api/orders", {
+      cy.intercept("POST", "api/orders", {
           fixture: "order.json",
       }).as("postOrder");
-      cy.visit("http://localhost:3000/");
+      cy.visit('.');
       cy.wait("@ingredients");
   });
 
@@ -58,91 +58,149 @@ describe("burger constructor", () => {
       cy.location("href").should("equal", "http://localhost:3000/");
   });
 
-  it("add and delete ingredients in the constructor and allows an authorized user create an order", () => {
-      const dataTransfer = new DataTransfer();
+  it("add and delete ingredients in the constructor", () => {
+    const dataTransfer = new DataTransfer();
 
-      cy.get('[data-test="ingredients"]').find("a").as("ingredients");
-      cy.get('[data-test="constructor"]').as("constructor");
-      cy.get("@constructor").get('[data-test="total-price"]').as("totalPrice");
-      cy.get("@constructor").get('[data-test="order-btn"]').as("submitBtn");
+    cy.get('[data-test="ingredients"]').find("a").as("ingredients");
+    cy.get('[data-test="constructor"]').as("constructor");
+    cy.get("@constructor").get('[data-test="total-price"]').as("totalPrice");
+    cy.get("@constructor").get('[data-test="order-btn"]').as("submitBtn");
 
-      // check initial state
-      cy.get("@constructor")
-          .should("exist")
-      cy.get("@totalPrice").should("exist").and("contain", "0");
-      cy.get("@submitBtn").should("be.disabled");
+    // check initial state
+    cy.get("@constructor")
+        .should("exist")
+    cy.get("@totalPrice").should("exist").and("contain", "0");
+    cy.get("@submitBtn").should("be.disabled");
 
-      // check drag and drop
-      cy.get("@ingredients").eq(1).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor")
-          .trigger("drop", { dataTransfer })
-          .should("contain", "Флюоресцентная булка R2-D3")
-          .and("contain", "988");
+    // check drag and drop
+    cy.get("@ingredients").eq(1).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor")
+        .trigger("drop", { dataTransfer })
+        .should("contain", "Флюоресцентная булка R2-D3")
+        .and("contain", "988");
 
-      cy.get("@ingredients").eq(0).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor")
-          .trigger("drop", { dataTransfer })
-          .should("contain", "Краторная булка N-200i")
-          .and("contain", "1255");
+    cy.get("@ingredients").eq(0).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor")
+        .trigger("drop", { dataTransfer })
+        .should("contain", "Краторная булка N-200i")
+        .and("contain", "1255");
 
+    cy.get("@ingredients").eq(2).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor").trigger("drop", { dataTransfer });
+    cy.get("@ingredients").eq(4).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor").trigger("drop", { dataTransfer });
+    cy.get("@ingredients").eq(4).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor").trigger("drop", { dataTransfer });
+    cy.get("@ingredients").eq(5).trigger("dragstart", {
+        dataTransfer,
+    });
+    cy.get("@constructor").trigger("drop", { dataTransfer });
 
-      cy.get("@ingredients").eq(2).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor").trigger("drop", { dataTransfer });
-      cy.get("@ingredients").eq(4).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor").trigger("drop", { dataTransfer });
-      cy.get("@ingredients").eq(4).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor").trigger("drop", { dataTransfer });
-      cy.get("@ingredients").eq(5).trigger("dragstart", {
-          dataTransfer,
-      });
-      cy.get("@constructor").trigger("drop", { dataTransfer });
+    cy.get("@constructor")
+        .should("contain", "Краторная булка N-200i")
+        .and("contain", "1255")
+        .should("contain", "Соус Spicy-X")
+        .and("contain", "90")
+        .should("contain", "Биокотлета из марсианской Магнолии")
+        .and("contain", "424")
+        .should("contain", "Филе Люминесцентного тетраодонтимформа")
+        .and("contain", "988");
 
-      cy.get("@constructor")
-          .should("contain", "Краторная булка N-200i")
-          .and("contain", "1255")
-          .should("contain", "Соус Spicy-X")
-          .and("contain", "90")
-          .should("contain", "Биокотлета из марсианской Магнолии")
-          .and("contain", "424")
-          .should("contain", "Филе Люминесцентного тетраодонтимформа")
-          .and("contain", "988");
+    cy.get("@constructor").within(() => {
+        cy.get(".constructor-element").should("have.length", "6");
 
-      cy.get("@constructor").within(() => {
-          cy.get(".constructor-element").should("have.length", "6");
+        cy.get(".constructor-element")
+            .eq(1)
+            .within(() => {
+                cy.get(".constructor-element__action").find("svg").as("deleteBtn");
+                cy.get("@deleteBtn").click();
+            });
 
-          cy.get(".constructor-element")
-              .eq(1)
-              .within(() => {
-                  cy.get(".constructor-element__action").find("svg").as("deleteBtn");
-                  cy.get("@deleteBtn").click();
-              });
+        cy.get(".constructor-element").should("have.length", "5");
+    });
 
-          cy.get(".constructor-element").should("have.length", "5");
-      });
+    cy.get("@constructor")
+        .should("not.contain", "Соус Spicy-X")
+        .and("not.contain", "90");
+});
+it("allows an authorized user to create an order", () => {
+  const dataTransfer = new DataTransfer();
 
-      cy.get("@constructor")
-          .should("not.contain", "Соус Spicy-X")
-          .and("not.contain", "90");
+  cy.get('[data-test="ingredients"]').find("a").as("ingredients");
+  cy.get('[data-test="constructor"]').as("constructor");
+  cy.get("@constructor").get('[data-test="total-price"]').as("totalPrice");
+  cy.get("@constructor").get('[data-test="order-btn"]').as("submitBtn");
 
-      // check order's creation
-      cy.contains('Оформить заказ').click();
-      cy.get('[data-test="order-number"]').contains("777").should("exist");
+  // check initial state
+  cy.get("@constructor")
+      .should("exist")
+  cy.get("@totalPrice").should("exist").and("contain", "0");
+  cy.get("@submitBtn").should("be.disabled");
 
-      // check closing modal and initial state
-      cy.get('[data-test="close-button"]').should("exist").click();
-      cy.get('[data-test="order-details"]').should("not.exist");
-      cy.get("@constructor")
-          .should("exist")
-      cy.get("@totalPrice").should("exist").and("contain", "0");
+  // check drag and drop
+  cy.get("@ingredients").eq(1).trigger("dragstart", {
+      dataTransfer,
   });
+  cy.get("@constructor")
+      .trigger("drop", { dataTransfer })
+      .should("contain", "Флюоресцентная булка R2-D3")
+      .and("contain", "988");
+
+  cy.get("@ingredients").eq(0).trigger("dragstart", {
+      dataTransfer,
+  });
+  cy.get("@constructor")
+      .trigger("drop", { dataTransfer })
+      .should("contain", "Краторная булка N-200i")
+      .and("contain", "1255");
+
+  cy.get("@ingredients").eq(2).trigger("dragstart", {
+      dataTransfer,
+  });
+  cy.get("@constructor").trigger("drop", { dataTransfer });
+  cy.get("@ingredients").eq(4).trigger("dragstart", {
+      dataTransfer,
+  });
+  cy.get("@constructor").trigger("drop", { dataTransfer });
+  cy.get("@ingredients").eq(4).trigger("dragstart", {
+      dataTransfer,
+  });
+  cy.get("@constructor").trigger("drop", { dataTransfer });
+  cy.get("@ingredients").eq(5).trigger("dragstart", {
+      dataTransfer,
+  });
+  cy.get("@constructor").trigger("drop", { dataTransfer });
+
+  cy.get("@constructor")
+      .should("contain", "Краторная булка N-200i")
+      .and("contain", "1255")
+      .should("contain", "Соус Spicy-X")
+      .and("contain", "90")
+      .should("contain", "Биокотлета из марсианской Магнолии")
+      .and("contain", "424")
+      .should("contain", "Филе Люминесцентного тетраодонтимформа")
+      .and("contain", "988");
+
+  // check order's creation
+  cy.contains('Оформить заказ').click();
+  cy.get('[data-test="order-number"]').contains("777").should("exist");
+
+  // check closing modal and initial state
+  cy.get('[data-test="close-button"]').should("exist").click();
+  cy.get('[data-test="order-details"]').should("not.exist");
+  cy.get("@constructor")
+      .should("exist")
+  cy.get("@totalPrice").should("exist").and("contain", "0");
+});
+
 });
