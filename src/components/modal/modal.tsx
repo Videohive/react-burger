@@ -36,7 +36,7 @@ const Modal = (props: TModal) => {
             <div className={style.title}>
               {title && <p className="text text_type_main-large ml-10">{title}</p>}
             </div>
-            <div className={style.close}>
+            <div className={style.close} data-test="close-button">
               <CloseIcon type="primary" onClick={onClose} />
             </div>
           </div>

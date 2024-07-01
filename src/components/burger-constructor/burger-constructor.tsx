@@ -71,7 +71,7 @@ const BurgerConstructor = () => {
   }, [dispatch]);
 
   return (
-    <div ref={drop} className={style.sideMenu + " mt-25"}>
+    <div ref={drop} className={style.sideMenu + " mt-25"} data-test="constructor">
       <div className="ml-6 pl-6">
         {bun && (
           <ConstructorItem
@@ -98,6 +98,7 @@ const BurgerConstructor = () => {
       <section className={`${style.orderProceed} mt-7 mb-7 pr-4`}>
         <span
           className={`${style.price} m-1 text text_type_digits-default mr-10`}
+          data-test="total-price"
         >
           <span className="pr-3">{orderSum}</span>
           <CurrencyIcon type="primary" />
@@ -111,6 +112,7 @@ const BurgerConstructor = () => {
           disabled={
             !ingredients.bun || ingredients.main.length < 1 ? true : false
           }
+          data-test="order-btn"
         >
           Оформить заказ
         </Button>

@@ -18,12 +18,15 @@ import {
   EDIT_PROFILE_SUBMIT,
   EDIT_PROFILE_ERROR,
   EDIT_PROFILE_SUCCESS,
+
   GET_USER_ERROR,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
+
   LOGOUT_ERROR,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+
   REFRESH_TOKEN_ERROR,
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS
@@ -68,7 +71,7 @@ type TAuthState  = {
   logoutError: boolean;
 };
 
-const InitialState : TAuthState = {
+export const InitialState : TAuthState = {
   isAuthenticated: false,
 
   user: {

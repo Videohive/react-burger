@@ -13,7 +13,6 @@ import { TLogin } from "../../utils/types";
 
 export function LoginPage() {
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated);
-  const loginError = useSelector((store) => store.auth.loginError);
   const dispatch = useDispatch();
 
   const { values, handleChange } = useForm({
